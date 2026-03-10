@@ -761,6 +761,28 @@ a {
   max-width: 25rem;
 }
 
+.what-we-do-images-shell::before {
+  content: "";
+  position: absolute;
+  left: 62%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 115%;
+  border-radius: 999px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.65) 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0.08) 70%,
+    transparent 85%
+  );
+  filter: blur(32px);
+  z-index: 0;
+  pointer-events: none;
+}
+
 @media (min-width: 640px) {
   .what-we-do-images-shell {
     height: 22rem;
@@ -784,6 +806,10 @@ a {
   object-fit: contain;
   transform: translateX(-50%) scale(1.5);
   transform-origin: bottom;
+  z-index: 1;
+  filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.7))
+          drop-shadow(0 0 35px rgba(255, 255, 255, 0.45))
+          drop-shadow(0 0 55px rgba(255, 255, 255, 0.25));
 }
 
 .what-we-do-image-right {
@@ -795,6 +821,10 @@ a {
   object-fit: contain;
   transform-origin: bottom;
   transform: translateX(-50%) scale(1.1);
+  z-index: 1;
+  filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.7))
+          drop-shadow(0 0 35px rgba(255, 255, 255, 0.45))
+          drop-shadow(0 0 55px rgba(255, 255, 255, 0.25));
 }
 
 .what-we-do-pill-experience {
@@ -802,6 +832,7 @@ a {
   left: 56%;
   top: 92%;
   transform: translateX(-50%);
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -823,6 +854,7 @@ a {
   bottom: -47px;
   left: -10%;
   transform: translate(-50%, 50%);
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
