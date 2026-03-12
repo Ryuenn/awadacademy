@@ -103,10 +103,10 @@ a {
 
 @media (min-width: 768px) {
   .top-contact-meta {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
+    margin-left: auto;
+    margin-right: 8.5rem;
+    text-align: right;
   }
 }
 
@@ -608,14 +608,18 @@ a {
 
 .section-what-we-do {
   position: relative;
-  background-color: #0e1014;
-  margin-top: 3rem;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(119, 125, 205, 0.32) 0%, transparent 40%),
+    radial-gradient(circle at 85% 90%, rgba(88, 99, 190, 0.32) 0%, transparent 45%),
+    linear-gradient(180deg, #0e1014 0%, #121623 45%, #0b0f18 100%);
+  margin-top: 0;
+  padding-top: 3rem;
   padding-bottom: 5rem;
 }
 
 @media (min-width: 640px) {
   .section-what-we-do {
-    margin-top: 4rem;
+    padding-top: 4rem;
     padding-bottom: 6rem;
   }
 }
@@ -3331,8 +3335,8 @@ a {
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #ffffff;
-  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: #111827;
+  background: #ffffff;
   box-shadow:
     0 18px 40px rgba(30, 64, 175, 0.65),
     0 0 0 1px rgba(191, 219, 254, 0.45);
