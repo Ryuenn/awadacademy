@@ -893,6 +893,10 @@ a {
           drop-shadow(0 0 55px rgba(255, 255, 255, 0.25));
 }
 
+.what-we-do-image-left-flipped {
+  transform: translateX(-50%) scale(-1.5, 1.5);
+}
+
 .what-we-do-image-right {
   position: absolute;
   bottom: -53px;
@@ -1696,7 +1700,7 @@ a {
   position: relative;
   z-index: 1;
   text-align: left;
-  max-width: 48rem;
+  max-width: 70rem;
   margin: 0 auto;
 }
 
@@ -1777,6 +1781,7 @@ a {
   background: rgba(255, 255, 255, 0.92);
   padding: 2.6rem 1.7rem 2.6rem;
   box-shadow: 0 20px 38px rgba(15, 23, 42, 0.18);
+  text-align: left;
 }
 
 .testimonial-card-number {
@@ -4469,7 +4474,7 @@ a {
 }
 
 .program-learning-title {
-  margin: 0 0 2rem;
+  margin: 2rem 0 -3rem;
   font-size: 2rem;
   font-weight: 700;
   color: #ffffff;
