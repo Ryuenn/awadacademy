@@ -2376,7 +2376,13 @@ a {
   }
 
   .founder-main-image {
-    transform: translateX(-0.75rem);
+    transform: translateX(0.60rem);
+  }
+}
+
+@media (min-width: 992px) {
+  .page-instructor .founder-main-image {
+    transform: translateX(0.18rem);
   }
 }
 
