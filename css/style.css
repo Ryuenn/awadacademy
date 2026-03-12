@@ -496,7 +496,7 @@ a {
 
 .hero-content-shell {
   position: absolute;
-  bottom: 80px;
+  bottom: 40px;
   left: 2.5rem;
   z-index: 10;
   max-width: 1400px;
