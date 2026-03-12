@@ -113,5 +113,57 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
-});
 
+  // Video modal: open embedded video in overlay
+  var videoModal = document.getElementById("videoModal");
+  var videoModalFrame = document.getElementById("videoModalFrame");
+  var videoModalCloseBtn = document.getElementById("videoModalCloseBtn");
+  var videoModalBackdrop = document.getElementById("closeVideoModal");
+  var videoTriggers = document.querySelectorAll("[data-vimeo-url]");
+
+  function openVideoModal(url) {
+    if (!videoModal || !videoModalFrame) return;
+    videoModalFrame.src = url;
+    videoModal.setAttribute("aria-hidden", "false");
+    videoModal.classList.add("is-open");
+  }
+
+  function closeVideoModal() {
+    if (!videoModal || !videoModalFrame) return;
+    videoModal.setAttribute("aria-hidden", "true");
+    videoModal.classList.remove("is-open");
+    videoModalFrame.src = "";
+  }
+
+  if (videoTriggers.length && videoModal && videoModalFrame) {
+    videoTriggers.forEach(function (trigger) {
+      var url = trigger.getAttribute("data-vimeo-url");
+      if (!url) return;
+
+      trigger.addEventListener("click", function () {
+        openVideoModal(url);
+      });
+
+      trigger.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openVideoModal(url);
+        }
+      });
+    });
+
+    if (videoModalCloseBtn) {
+      videoModalCloseBtn.addEventListener("click", closeVideoModal);
+    }
+
+    if (videoModalBackdrop) {
+      videoModalBackdrop.addEventListener("click", closeVideoModal);
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeVideoModal();
+      }
+    });
+  }
+});
