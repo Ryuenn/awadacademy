@@ -428,7 +428,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Submit to Formspree using fetch with JSON
         var data = {
           name: nameValue,
-          email: emailValue
+          email: emailValue,
+          _replyto: emailValue
         };
 
         fetch("https://formspree.io/f/mreykwwa", {
