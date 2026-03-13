@@ -308,6 +308,14 @@ a {
   line-height: 1;
 }
 
+.nav-lock-icon {
+  display: inline-block;
+  font-size: 0.65em;
+  margin-right: 0.3em;
+  opacity: 0.8;
+  vertical-align: middle;
+}
+
 /* Nav dropdown (Academy, About Us, Community) */
 .nav-dropdown {
   position: relative;
