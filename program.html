@@ -380,14 +380,14 @@
           <button class="modal-close" aria-label="Close modal">&times;</button>
           <h2 class="modal-title">Unlock Free Resources</h2>
           <p class="modal-subtitle">Subscribe to access exclusive trial advocacy videos and insights.</p>
-          <form class="modal-form">
+          <form class="modal-form" action="https://formspree.io/f/mreykwwa" method="POST">
             <div class="modal-form-group">
               <label for="modal-name" class="modal-label">Name</label>
-              <input type="text" class="modal-input" placeholder="Your Name" required>
+              <input type="text" name="name" class="modal-input" placeholder="Your Name" required>
             </div>
             <div class="modal-form-group">
               <label for="modal-email" class="modal-label">Email</label>
-              <input type="email" class="modal-input" placeholder="you@example.com" required>
+              <input type="email" name="email" class="modal-input" placeholder="you@example.com" required>
               <div class="modal-error-message"></div>
             </div>
             <button type="submit" class="modal-cta">Unlock Access</button>

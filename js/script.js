@@ -414,6 +414,10 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
+        // Get form data
+        var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
+        var nameValue = nameInput ? nameInput.value.trim() : "";
+
         // Show loading state
         if (submitBtn) {
           submitBtn.classList.add("loading");
@@ -421,15 +425,37 @@ document.addEventListener("DOMContentLoaded", function () {
           submitBtn.textContent = "Unlocking access...";
         }
 
-        // Simulate processing
-        setTimeout(function() {
+        // Submit to Formspree using fetch with JSON
+        var data = {
+          name: nameValue,
+          email: emailValue
+        };
+
+        fetch("https://formspree.io/f/mreykwwa", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(data)
+        })
+        .then(function(response) {
+          return response.json().then(function(json) {
+            if (response.ok) {
+              return json;
+            } else {
+              throw new Error("Form submission failed");
+            }
+          });
+        })
+        .then(function(data) {
+          // Success - show modal success message
           if (modalForm) modalForm.style.display = "none";
           if (modalSuccess) {
             modalSuccess.style.display = "block";
-            // Update success message
             var successText = modalSuccess.querySelector("p");
             if (successText) {
-              successText.textContent = "Access unlocked. Redirecting...";
+              successText.textContent = "Thank you! Check your email for access details.";
             }
           }
           
@@ -439,8 +465,17 @@ document.addEventListener("DOMContentLoaded", function () {
           // Redirect after brief delay
           setTimeout(function() {
             window.location.href = "videogallery.html";
-          }, 1200);
-        }, 600);
+          }, 2000);
+        })
+        .catch(function(error) {
+          console.error("Error:", error);
+          showEmailError("There was an error sending your email. Please try again.");
+          if (submitBtn) {
+            submitBtn.classList.remove("loading");
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Unlock Access";
+          }
+        });
       });
     }
 
