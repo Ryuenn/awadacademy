@@ -1145,7 +1145,7 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
   border: 1px solid rgba(15, 23, 42, 0.06);
 }
 
@@ -1156,10 +1156,15 @@ a {
   height: 2.4rem;
   width: 2.4rem;
   color: #2f365f;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0rem;
 }
 
 .success-story-card-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.success-story-card-icon img {
   width: 100%;
   height: 100%;
 }

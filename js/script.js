@@ -274,34 +274,30 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Video Gallery navbar content gate
-  var videoGalleryNavLink = document.getElementById("videoGalleryNavLink");
-  if (videoGalleryNavLink) {
-    videoGalleryNavLink.addEventListener("click", function (e) {
+  // Free Resources navbar trigger - open subscription modal
+  var freeResourcesLink = document.getElementById("videoGalleryNavLink");
+  if (freeResourcesLink) {
+    freeResourcesLink.addEventListener("click", function (e) {
       e.preventDefault();
       
-      // Check if user is already subscribed
-      var isSubscribed = localStorage.getItem("awadSubscribed") === "true";
-      
-      if (isSubscribed) {
-        // Allow navigation
-        window.location.href = "videogallery.html";
-      } else {
-        // Open subscription modal
-        var subscriptionModal = document.querySelector(".subscription-modal");
-        if (subscriptionModal) {
-          subscriptionModal.classList.add("show");
-          var modalForm = subscriptionModal.querySelector(".modal-form");
-          var modalSuccess = subscriptionModal.querySelector(".modal-success");
-          if (modalForm) modalForm.style.display = "block";
-          if (modalSuccess) modalSuccess.style.display = "none";
-          var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
-          if (emailInput) emailInput.classList.remove("error");
-          var errorMsg = subscriptionModal.querySelector(".modal-error-message");
-          if (errorMsg) errorMsg.style.display = "none";
-          var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
-          if (nameInput) nameInput.focus();
+      var subscriptionModal = document.querySelector(".subscription-modal");
+      if (subscriptionModal) {
+        subscriptionModal.classList.add("show");
+        
+        var modalForm = subscriptionModal.querySelector(".modal-form");
+        var modalSuccess = subscriptionModal.querySelector(".modal-success");
+        var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
+        var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
+        var errorMsg = subscriptionModal.querySelector(".modal-error-message");
+        
+        if (modalForm) {
+          modalForm.style.display = "block";
+          modalForm.reset();
         }
+        if (modalSuccess) modalSuccess.style.display = "none";
+        if (emailInput) emailInput.classList.remove("error");
+        if (errorMsg) errorMsg.style.display = "none";
+        if (nameInput) nameInput.focus();
       }
     });
   }
