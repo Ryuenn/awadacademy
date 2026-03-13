@@ -142,12 +142,16 @@
                 educational training designed to help participants better understand trial
                 preparation, jury engagement, and persuasive case presentation.
               </p>
-              <a href="#" class="program-overview-cta">
-                Join a Training
+              <div class="program-overview-cta-container">
+                <button class="program-overview-cta program-overview-cta-join" id="programJoinTrainingBtn">
+                  Join a Training
+                </button>
                 <span class="program-cta-pipe">|</span>
-                Watch Free Video Insights
-                <span class="program-cta-arrow">→</span>
-              </a>
+                <button class="program-overview-cta program-overview-cta-videos" id="programWatchVideosBtn">
+                  Watch Free Video Insights
+                  <span class="program-cta-arrow">→</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -368,6 +372,31 @@
           </div>
         </div>
       </section>
+
+      <!-- SUBSCRIPTION MODAL FOR FREE RESOURCES -->
+      <div class="subscription-modal">
+        <div class="modal-content">
+          <button class="modal-close" aria-label="Close modal">&times;</button>
+          <h2 class="modal-title">Unlock Free Resources</h2>
+          <p class="modal-subtitle">Subscribe to access exclusive trial advocacy videos and insights.</p>
+          <form class="modal-form">
+            <div class="modal-form-group">
+              <label for="modal-name" class="modal-label">Name</label>
+              <input type="text" class="modal-input" placeholder="Your Name" required>
+            </div>
+            <div class="modal-form-group">
+              <label for="modal-email" class="modal-label">Email</label>
+              <input type="email" class="modal-input" placeholder="you@example.com" required>
+              <div class="modal-error-message"></div>
+            </div>
+            <button type="submit" class="modal-cta">Unlock Access</button>
+          </form>
+          <div class="modal-success" style="display: none;">
+            <p>Thank you. Your access has been unlocked.</p>
+            <button class="modal-redirect">Continue to Videos</button>
+          </div>
+        </div>
+      </div>
 
       <!-- FOOTER -->
       <footer class="site-footer">

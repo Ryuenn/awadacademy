@@ -120,6 +120,8 @@ document.addEventListener("DOMContentLoaded", function () {
   var videoModalCloseBtn = document.getElementById("videoModalCloseBtn");
   var videoModalBackdrop = document.getElementById("closeVideoModal");
   var videoTriggers = document.querySelectorAll("[data-vimeo-url]");
+  var watchMoreVideosBtn = document.getElementById("watchMoreVideosBtn");
+  var subscriptionModal = document.querySelector(".subscription-modal");
 
   function openVideoModal(url) {
     if (!videoModal || !videoModalFrame) return;
@@ -135,19 +137,55 @@ document.addEventListener("DOMContentLoaded", function () {
     videoModalFrame.src = "";
   }
 
+  // Check if a video trigger is in the gallery (requires subscription)
+  function isGalleryVideo(trigger) {
+    return trigger.closest(".success-video-grid") !== null;
+  }
+
   if (videoTriggers.length && videoModal && videoModalFrame) {
     videoTriggers.forEach(function (trigger) {
       var url = trigger.getAttribute("data-vimeo-url");
       if (!url) return;
 
-      trigger.addEventListener("click", function () {
-        openVideoModal(url);
+      trigger.addEventListener("click", function (e) {
+        // Gallery videos require subscription modal
+        if (isGalleryVideo(trigger)) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (subscriptionModal) {
+            subscriptionModal.classList.add("show");
+            var modalForm = subscriptionModal.querySelector(".modal-form");
+            var modalSuccess = subscriptionModal.querySelector(".modal-success");
+            if (modalForm) modalForm.style.display = "block";
+            if (modalSuccess) modalSuccess.style.display = "none";
+            var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
+            if (emailInput) emailInput.classList.remove("error");
+            var errorMsg = subscriptionModal.querySelector(".modal-error-message");
+            if (errorMsg) errorMsg.style.display = "none";
+            var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
+            if (nameInput) nameInput.focus();
+          }
+        } else {
+          openVideoModal(url);
+        }
       });
 
       trigger.addEventListener("keydown", function (e) {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          openVideoModal(url);
+          if (isGalleryVideo(trigger)) {
+            if (subscriptionModal) {
+              subscriptionModal.classList.add("show");
+              var modalForm = subscriptionModal.querySelector(".modal-form");
+              var modalSuccess = subscriptionModal.querySelector(".modal-success");
+              if (modalForm) modalForm.style.display = "block";
+              if (modalSuccess) modalSuccess.style.display = "none";
+              var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
+              if (nameInput) nameInput.focus();
+            }
+          } else {
+            openVideoModal(url);
+          }
         }
       });
     });
@@ -166,4 +204,228 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+
+  // Watch More Videos button opens subscription modal
+  if (watchMoreVideosBtn && subscriptionModal) {
+    watchMoreVideosBtn.addEventListener("click", function () {
+      subscriptionModal.classList.add("show");
+      var modalForm = subscriptionModal.querySelector(".modal-form");
+      var modalSuccess = subscriptionModal.querySelector(".modal-success");
+      if (modalForm) modalForm.style.display = "block";
+      if (modalSuccess) modalSuccess.style.display = "none";
+      var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
+      if (emailInput) emailInput.classList.remove("error");
+      var errorMsg = subscriptionModal.querySelector(".modal-error-message");
+      if (errorMsg) errorMsg.style.display = "none";
+      var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
+      if (nameInput) nameInput.focus();
+    });
+  }
+
+  // Hero button opens subscription modal
+  var heroCtaButton = document.getElementById("heroCtaButton");
+  if (heroCtaButton && subscriptionModal) {
+    heroCtaButton.addEventListener("click", function () {
+      subscriptionModal.classList.add("show");
+      var modalForm = subscriptionModal.querySelector(".modal-form");
+      var modalSuccess = subscriptionModal.querySelector(".modal-success");
+      if (modalForm) modalForm.style.display = "block";
+      if (modalSuccess) modalSuccess.style.display = "none";
+      var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
+      if (emailInput) emailInput.classList.remove("error");
+      var errorMsg = subscriptionModal.querySelector(".modal-error-message");
+      if (errorMsg) errorMsg.style.display = "none";
+      var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
+      if (nameInput) nameInput.focus();
+    });
+  }
+
+  // Program overview section buttons open subscription modal
+  var programJoinBtn = document.getElementById("programJoinTrainingBtn");
+  var programWatchBtn = document.getElementById("programWatchVideosBtn");
+  if (programJoinBtn && subscriptionModal) {
+    programJoinBtn.addEventListener("click", function () {
+      subscriptionModal.classList.add("show");
+      var modalForm = subscriptionModal.querySelector(".modal-form");
+      var modalSuccess = subscriptionModal.querySelector(".modal-success");
+      if (modalForm) modalForm.style.display = "block";
+      if (modalSuccess) modalSuccess.style.display = "none";
+      var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
+      if (emailInput) emailInput.classList.remove("error");
+      var errorMsg = subscriptionModal.querySelector(".modal-error-message");
+      if (errorMsg) errorMsg.style.display = "none";
+      var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
+      if (nameInput) nameInput.focus();
+    });
+  }
+  if (programWatchBtn && subscriptionModal) {
+    programWatchBtn.addEventListener("click", function () {
+      subscriptionModal.classList.add("show");
+      var modalForm = subscriptionModal.querySelector(".modal-form");
+      var modalSuccess = subscriptionModal.querySelector(".modal-success");
+      if (modalForm) modalForm.style.display = "block";
+      if (modalSuccess) modalSuccess.style.display = "none";
+      var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
+      if (emailInput) emailInput.classList.remove("error");
+      var errorMsg = subscriptionModal.querySelector(".modal-error-message");
+      if (errorMsg) errorMsg.style.display = "none";
+      var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
+      if (nameInput) nameInput.focus();
+    });
+  }
+
+  // Subscription Modal and CTA Button Functionality
+  var allCtaBanners = document.querySelectorAll(".section-cta");
+  
+  allCtaBanners.forEach(function(banner) {
+    var subscriptionModal = banner.nextElementSibling;
+    
+    // Check if the following element is a subscription modal
+    if (!subscriptionModal || !subscriptionModal.classList.contains("subscription-modal")) {
+      return; // Skip if modal not found
+    }
+    
+    var modalForm = subscriptionModal.querySelector(".modal-form");
+    var modalSuccess = subscriptionModal.querySelector(".modal-success");
+    var modalClose = subscriptionModal.querySelector(".modal-close");
+    var joinBtn = banner.querySelector(".cta-banner-button-solid");
+    var resourcesBtn = banner.querySelector(".cta-banner-button-outline");
+    var redirectBtn = subscriptionModal.querySelector(".modal-redirect");
+    var submitBtn = subscriptionModal.querySelector(".modal-cta");
+    var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
+    
+    if (!joinBtn || !resourcesBtn) return;
+
+    // Email validation function
+    var validateEmail = function(email) {
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    };
+
+    // Clear error state
+    var clearEmailError = function() {
+      if (emailInput) {
+        emailInput.classList.remove("error");
+        var errorMsg = emailInput.parentElement.querySelector(".modal-error-message");
+        if (errorMsg) {
+          errorMsg.style.display = "none";
+        }
+      }
+    };
+
+    // Show email error
+    var showEmailError = function(message) {
+      if (emailInput) {
+        emailInput.classList.add("error");
+        var errorMsg = emailInput.parentElement.querySelector(".modal-error-message");
+        if (!errorMsg) {
+          errorMsg = document.createElement("div");
+          errorMsg.className = "modal-error-message";
+          emailInput.parentElement.appendChild(errorMsg);
+        }
+        errorMsg.textContent = message;
+        errorMsg.style.display = "block";
+      }
+    };
+
+    // Open modal for "Access Free Resources" button
+    resourcesBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      subscriptionModal.classList.add("show");
+      if (modalForm) modalForm.style.display = "block";
+      if (modalSuccess) modalSuccess.style.display = "none";
+      clearEmailError();
+      var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
+      if (nameInput) nameInput.focus();
+    });
+
+    // Close modal functions
+    var closeModal = function() {
+      subscriptionModal.classList.remove("show");
+      if (modalForm) {
+        modalForm.style.display = "block";
+        modalForm.reset();
+        if (submitBtn) {
+          submitBtn.classList.remove("loading");
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Unlock Access";
+        }
+      }
+      if (modalSuccess) modalSuccess.style.display = "none";
+      clearEmailError();
+    };
+
+    if (modalClose) {
+      modalClose.addEventListener("click", closeModal);
+    }
+
+    subscriptionModal.addEventListener("click", function (e) {
+      if (e.target === subscriptionModal) closeModal();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && subscriptionModal.classList.contains("show")) {
+        closeModal();
+      }
+    });
+
+    // Clear error on input
+    if (emailInput) {
+      emailInput.addEventListener("input", clearEmailError);
+    }
+
+    // Form submission
+    if (modalForm) {
+      modalForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        
+        // Validate email
+        var emailValue = emailInput ? emailInput.value.trim() : "";
+        if (emailValue && !validateEmail(emailValue)) {
+          showEmailError("Please enter a valid email address");
+          return;
+        }
+
+        // Show loading state
+        if (submitBtn) {
+          submitBtn.classList.add("loading");
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Unlocking access...";
+        }
+
+        // Simulate processing
+        setTimeout(function() {
+          if (modalForm) modalForm.style.display = "none";
+          if (modalSuccess) {
+            modalSuccess.style.display = "block";
+            // Update success message
+            var successText = modalSuccess.querySelector("p");
+            if (successText) {
+              successText.textContent = "Access unlocked. Redirecting...";
+            }
+          }
+          
+          // Redirect after brief delay
+          setTimeout(function() {
+            window.location.href = "videogallery.html";
+          }, 1200);
+        }, 600);
+      });
+    }
+
+    // Redirect button click (fallback if user manually clicks)
+    if (redirectBtn) {
+      redirectBtn.addEventListener("click", function () {
+        window.location.href = "videogallery.html";
+      });
+    }
+
+    // Join Live Event button redirect with click animation
+    joinBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      setTimeout(function() {
+        window.location.href = "contact.html";
+      }, 120);
+    });
+  });
 });
