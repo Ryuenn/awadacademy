@@ -1784,7 +1784,7 @@ a {
 .testimonial-card-fancy {
   position: relative;
   text-align: center;
-  padding-bottom: 3.75rem;
+  padding-bottom: 7.0rem;
 }
 
 .testimonial-card-surface {
@@ -1829,7 +1829,7 @@ a {
 .testimonial-card-avatar-wrap {
   position: absolute;
   left: 50%;
-  bottom: 5.5rem;
+  bottom: 7.5rem;
   z-index: 2;
   transform: translateX(-50%);
   width: 5.35rem;
@@ -1857,10 +1857,11 @@ a {
 }
 
 .testimonial-card-name {
-  margin: 2.2rem 0 0;
+  margin: 2.1rem 0 0;
   font-size: 1rem;
   font-weight: 600;
   color: #f3f4f6;
+  transform: translateY(1.5rem);
 }
 
 @media (max-width: 767px) {
