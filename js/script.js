@@ -1,17 +1,34 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var navToggle = document.querySelector(".nav-toggle-button");
+  var navToggles = document.querySelectorAll(".nav-toggle-button");
   var navLinks = document.getElementById("main-nav-links");
+
+  function isMobile() {
+    return window.innerWidth < 768;
+  }
   var footerYear = document.getElementById("footer-year");
 
   if (footerYear) {
     footerYear.textContent = new Date().getFullYear().toString();
   }
 
-  if (navToggle && navLinks) {
-    navToggle.addEventListener("click", function () {
-      var expanded = navToggle.getAttribute("aria-expanded") === "true";
-      navToggle.setAttribute("aria-expanded", expanded ? "false" : "true");
-      navLinks.classList.toggle("is-open");
+  if (navToggles.length && navLinks) {
+    navToggles.forEach(function(navToggle) {
+      navToggle.addEventListener("click", function () {
+        if (!isMobile()) return;
+        var expanded = navLinks.classList.contains("is-open");
+        navToggles.forEach(function(btn) {
+          btn.setAttribute("aria-expanded", expanded ? "false" : "true");
+        });
+        navLinks.classList.toggle("is-open");
+      });
+    });
+    window.addEventListener("resize", function () {
+      if (!isMobile()) {
+        navLinks.classList.remove("is-open");
+        navToggles.forEach(function(btn) {
+          btn.setAttribute("aria-expanded", "false");
+        });
+      }
     });
   }
 
@@ -428,8 +445,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Submit to Formspree using fetch with JSON
         var data = {
           name: nameValue,
-          email: emailValue,
-          _replyto: emailValue
+          email: emailValue
         };
 
         fetch("https://formspree.io/f/mreykwwa", {
