@@ -239,6 +239,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Free Resources nav link opens subscription modal
+  var freeResourcesNavLink = document.getElementById("freeResourcesNavLink");
+  if (freeResourcesNavLink && subscriptionModal) {
+    freeResourcesNavLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      subscriptionModal.classList.add("show");
+      var modalForm = subscriptionModal.querySelector(".modal-form");
+      var modalSuccess = subscriptionModal.querySelector(".modal-success");
+      if (modalForm) modalForm.style.display = "block";
+      if (modalSuccess) modalSuccess.style.display = "none";
+      var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
+      if (emailInput) emailInput.classList.remove("error");
+      var errorMsg = subscriptionModal.querySelector(".modal-error-message");
+      if (errorMsg) errorMsg.style.display = "none";
+      var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
+      if (nameInput) nameInput.focus();
+    });
+  }
+
   // Hero button opens subscription modal
   var heroCtaButton = document.getElementById("heroCtaButton");
   if (heroCtaButton && subscriptionModal) {
