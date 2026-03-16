@@ -2877,6 +2877,35 @@
     color: rgba(255, 255, 255, 0.46);
   }
 
+  .site-footer-social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .site-footer-social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .site-footer-social-icon:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .site-footer-social-icon svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
   .site-footer-column-title {
     margin: 0 0 1rem;
     font-size: 0.95rem;
