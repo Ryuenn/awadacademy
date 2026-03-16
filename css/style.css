@@ -2002,6 +2002,9 @@
     font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .success-video-card-play {
