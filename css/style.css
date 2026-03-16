@@ -140,15 +140,10 @@
     background-color: rgba(71, 85, 105, 0.4);
   }
 
-  .top-contact-emoji {
-    font-size: 0.8125rem;
-    color: rgba(226, 232, 240, 0.7);
-  }
-
   .header-divider-shell {
     margin-left: auto;
     margin-right: auto;
-    max-width: 72rem;
+    max-width: 76rem;
     padding: 0 1rem;
   }
 
@@ -173,21 +168,25 @@
 
   .header-divider-line {
     margin-left: -1.75rem;
+    margin-right: -0.25rem;
     height: 2px;
-    width: min(1040px, calc(100% - 2rem));
+    width: calc(100% + 1.75rem + 0.25rem);
     background-color: rgba(100, 116, 139, 0.25);
   }
 
   @media (min-width: 640px) {
     .header-divider-line {
       margin-left: -2.25rem;
+      margin-right: -0.25rem;
+      width: calc(100% + 2.25rem + 0.25rem);
     }
   }
 
   @media (min-width: 1024px) {
     .header-divider-line {
       margin-left: -3.5rem;
-      width: 1040px;
+      margin-right: -0.25rem;
+      width: calc(100% + 3.5rem + 0.25rem);
     }
   }
 
@@ -228,6 +227,7 @@
     text-transform: uppercase;
     letter-spacing: 0.32em;
     color: rgba(226, 232, 240, 0.7);
+    margin: 0 auto;
   }
 
   @media (max-width: 767px) {
