@@ -463,7 +463,7 @@
     width: 100%;
     object-fit: cover;
     object-position: center 75%;
-    filter: brightness(0.86) saturate(0.6) contrast(1.05);
+    filter: brightness(1) saturate(1) contrast(1);
   }
 
   .hero-overlay-gradient {
@@ -1941,7 +1941,8 @@
   }
 
   /* SUCCESS STORIES GRID */
-  .success-video-grid {
+  .success-video-grid,
+  .learning-video-grid {
     position: relative;
     overflow: hidden;
     padding: 5rem 1rem 5.5rem;
@@ -2002,8 +2003,17 @@
     text-transform: uppercase;
   }
 
+  .success-video-card-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   @media (max-width: 767px) {
-    .success-video-grid {
+    .success-video-grid,
+    .learning-video-grid {
       padding-top: 4.25rem;
       padding-bottom: 4.75rem;
     }

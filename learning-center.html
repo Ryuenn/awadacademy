@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Client Testimonials | Awad Academy</title>
+    <title>Learning Center | Awad Academy</title>
     <meta
       name="description"
-      content="Hear from legal professionals and participants who have experienced Awad Academy's trial advocacy training."
+      content="Explore comprehensive video library and learning resources from Awad Academy's trial advocacy experts."
     />
     <link rel="icon" type="image/webp" href="assets/favicon.webp" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <main class="page-root page-testimonials">
+    <main class="page-root">
       <!-- HEADER SHELL -->
       <div class="header-shell">
         <div class="top-contact-bar">
@@ -24,7 +24,17 @@
                 class="logo-image"
               />
             </a>
-
+            <button
+              class="nav-toggle-button"
+              id="navToggle"
+              aria-label="Toggle navigation"
+              aria-expanded="false"
+              aria-controls="main-nav-links"
+            >
+              <span class="nav-toggle-bar"></span>
+              <span class="nav-toggle-bar"></span>
+              <span class="nav-toggle-bar"></span>
+            </button>
             <div class="top-contact-meta">
               <span class="top-contact-item">
                 <span style="margin-left: 16px;">
@@ -79,30 +89,16 @@
                   <a href="instructor.html" class="nav-dropdown-item">Instructor</a>
                 </div>
               </div>
-              <a href="learning-center.html" class="nav-link nav-link-with-separator">
+              <a href="learning-center.html" class="nav-link nav-link-with-separator nav-link-active">
                 <span>Learning Center</span>
               </a>
-              <a href="videogallery.html" class="nav-link nav-link-with-separator" id="videoGalleryNavLink">
+              <a href="videogallery.html" class="nav-link nav-link-with-separator">
                 <span>Free Resources</span>
               </a>
-              <!--
-              <div class="nav-dropdown">
-                <a href="#" class="nav-link nav-link-with-separator nav-link-has-dropdown">
-                  <span>Community</span>
-                  <span class="nav-link-dropdown-indicator">▾</span>
-                </a>
-                <div class="nav-dropdown-menu">
-                  <a href="successstories.html" class="nav-dropdown-item">Success Stories</a>
-                </div>
-              </div>
-              <a href="testimonials.html" class="nav-link nav-link-active">
-                <span>Testimonials</span>
-              </a>
-              -->
               <a href="https://magistratetesting.vercel.app/" class="nav-link nav-link-with-separator" target="_blank" rel="noopener noreferrer">
                 <span>Our Partners</span>
               </a>
-              <a href="contact.html" class="nav-link nav-link-with-separator">
+              <a href="contact.html" class="nav-link">
                 <span>Contact Us</span>
               </a>
             </div>
@@ -120,12 +116,12 @@
         </header>
       </div>
 
-      <!-- CLIENT TESTIMONIAL HERO (based on About hero) -->
+      <!-- LEARNING CENTER HERO -->
       <section class="about-hero">
         <div class="about-hero-background">
           <img
-            src="assets/testimonialbg.jpg"
-            alt="Awad Academy client testimonial event"
+            src="assets/bgexclusive.png"
+            alt="Awad Academy learning resources"
             class="about-hero-image"
           />
           <div class="about-hero-overlay"></div>
@@ -138,266 +134,237 @@
         </div>
 
         <div class="about-hero-content">
-          <h1 class="about-hero-title">Client Testimonials</h1>
+          <h1 class="about-hero-title">Learning Center</h1>
           <p class="about-hero-description">
-            See how Awad Academy&apos;s trial advocacy training has helped legal professionals,
-            advocates, and teams elevate their courtroom results.
+            Comprehensive video library featuring expert-led trainings, strategic
+            insights, and practical techniques for trial advocacy success.
           </p>
         </div>
       </section>
 
-      <!-- REAL EXPERIENCES GRID -->
-      <section class="section-testimonials">
-        <div class="testimonials-background-glow"></div>
-
-        <div class="section-inner section-inner-narrow">
-          <div class="section-heading-center testimonials-header">
-            <p class="section-eyebrow testimonials-eyebrow">Learn More</p>
-            <h2 class="testimonials-title">Real Experiences</h2>
-            <p class="section-subtitle">
-              Hear from individuals who have experienced Awad Academy&apos;s approach to trial advocacy
-              education. Our participants share how the academy&apos;s training, strategies, and insights
-              have helped strengthen their understanding of courtroom advocacy and case preparation.
-            </p>
-          </div>
-
-          <div class="testimonials-grid-fancy">
-            <!-- Row 1 -->
-            <article class="testimonial-card-fancy">
-              <div class="testimonial-card-number">1</div>
-
-              <div class="testimonial-card-surface">
-                <p class="testimonial-card-text">
-                  Ibrahim’s approach helped elevate my trial outcomes.
-                </p>
-              </div>
-
-              <div class="testimonial-card-avatar-wrap">
+      <!-- VIDEO LIBRARY GRID -->
+      <section class="learning-video-grid">
+        <div class="success-video-grid-inner">
+          <div class="success-video-grid-layout">
+            <!-- Video 1 -->
+            <article
+              class="success-video-card"
+              role="button"
+              tabindex="0"
+              aria-label="Play: Trial Strategy Overview"
+              data-vimeo-url="https://www.youtube.com/embed/xg0nz6T0yco?autoplay=1"
+            >
+              <div class="success-video-card-media">
                 <img
-                  src="assets/sampleperson.png"
-                  alt="Client testimonial"
-                  class="testimonial-card-avatar-image"
+                  src="assets/awadthumbnail.png"
+                  alt="Trial Strategy Overview"
+                  class="success-video-card-image"
                 />
+                <div class="success-video-card-overlay"></div>
+                <div class="success-video-card-play">
+                  <span class="insights-video-play-pill">
+                    <span class="insights-video-play-icon"></span>
+                  </span>
+                </div>
+                <div class="success-video-card-label">Trial Strategy Overview</div>
               </div>
-
-              <h3 class="testimonial-card-name">Joe Fried, Esq.</h3>
             </article>
 
-            <article class="testimonial-card-fancy">
-              <div class="testimonial-card-number">2</div>
-
-              <div class="testimonial-card-surface">
-                <p class="testimonial-card-text">
-                  I learned tools I still use in every settlement negotiation.
-                </p>
-              </div>
-
-              <div class="testimonial-card-avatar-wrap">
+            <!-- Video 2 -->
+            <article
+              class="success-video-card"
+              role="button"
+              tabindex="0"
+              aria-label="Play: Jury Engagement Fundamentals"
+              data-vimeo-url="https://www.youtube.com/embed/OYS71kCwPfE?autoplay=1"
+            >
+              <div class="success-video-card-media">
                 <img
-                  src="assets/sampleperson.png"
-                  alt="Client testimonial"
-                  class="testimonial-card-avatar-image"
+                  src="assets/aboutusthumbnail.png"
+                  alt="Jury Engagement Fundamentals"
+                  class="success-video-card-image"
                 />
+                <div class="success-video-card-overlay"></div>
+                <div class="success-video-card-play">
+                  <span class="insights-video-play-pill">
+                    <span class="insights-video-play-icon"></span>
+                  </span>
+                </div>
+                <div class="success-video-card-label">Jury Engagement Fundamentals</div>
               </div>
-
-              <h3 class="testimonial-card-name">Natanya Brooks, Esq.</h3>
             </article>
 
-            <article class="testimonial-card-fancy">
-              <div class="testimonial-card-number">3</div>
-
-              <div class="testimonial-card-surface">
-                <p class="testimonial-card-text">
-                  Real juror insights gave me the edge few attorneys have.
-                </p>
-              </div>
-
-              <div class="testimonial-card-avatar-wrap">
+            <!-- Video 3 -->
+            <article
+              class="success-video-card"
+              role="button"
+              tabindex="0"
+              aria-label="Play: Persuasion Techniques"
+              data-vimeo-url="https://www.youtube.com/embed/mTFg1tus2e8?autoplay=1"
+            >
+              <div class="success-video-card-media">
                 <img
-                  src="assets/sampleperson.png"
-                  alt="Client testimonial"
-                  class="testimonial-card-avatar-image"
+                  src="assets/awadthumbnail.png"
+                  alt="Persuasion Techniques"
+                  class="success-video-card-image"
                 />
+                <div class="success-video-card-overlay"></div>
+                <div class="success-video-card-play">
+                  <span class="insights-video-play-pill">
+                    <span class="insights-video-play-icon"></span>
+                  </span>
+                </div>
+                <div class="success-video-card-label">Persuasion Techniques</div>
               </div>
-
-              <h3 class="testimonial-card-name">Participant</h3>
             </article>
 
-            <!-- Row 2 -->
-            <article class="testimonial-card-fancy">
-              <div class="testimonial-card-number">1</div>
-
-              <div class="testimonial-card-surface">
-                <p class="testimonial-card-text">
-                  Ibrahim’s approach helped elevate my trial outcomes.
-                </p>
-              </div>
-
-              <div class="testimonial-card-avatar-wrap">
+            <!-- Video 4 -->
+            <article
+              class="success-video-card"
+              role="button"
+              tabindex="0"
+              aria-label="Play: Case Analysis Methods"
+              data-vimeo-url="https://www.youtube.com/embed/WnZwjnKXRHA?autoplay=1"
+            >
+              <div class="success-video-card-media">
                 <img
-                  src="assets/sampleperson.png"
-                  alt="Client testimonial"
-                  class="testimonial-card-avatar-image"
+                  src="assets/aboutusthumbnail.png"
+                  alt="Case Analysis Methods"
+                  class="success-video-card-image"
                 />
+                <div class="success-video-card-overlay"></div>
+                <div class="success-video-card-play">
+                  <span class="insights-video-play-pill">
+                    <span class="insights-video-play-icon"></span>
+                  </span>
+                </div>
+                <div class="success-video-card-label">Case Analysis Methods</div>
               </div>
-
-              <h3 class="testimonial-card-name">Joe Fried, Esq.</h3>
             </article>
 
-            <article class="testimonial-card-fancy">
-              <div class="testimonial-card-number">2</div>
-
-              <div class="testimonial-card-surface">
-                <p class="testimonial-card-text">
-                  I learned tools I still use in every settlement negotiation.
-                </p>
-              </div>
-
-              <div class="testimonial-card-avatar-wrap">
+            <!-- Video 5 -->
+            <article
+              class="success-video-card"
+              role="button"
+              tabindex="0"
+              aria-label="Play: Settlement Negotiation"
+              data-vimeo-url="https://www.youtube.com/embed/n4C3z8rBLuU?autoplay=1"
+            >
+              <div class="success-video-card-media">
                 <img
-                  src="assets/sampleperson.png"
-                  alt="Client testimonial"
-                  class="testimonial-card-avatar-image"
+                  src="assets/awadthumbnail.png"
+                  alt="Settlement Negotiation"
+                  class="success-video-card-image"
                 />
+                <div class="success-video-card-overlay"></div>
+                <div class="success-video-card-play">
+                  <span class="insights-video-play-pill">
+                    <span class="insights-video-play-icon"></span>
+                  </span>
+                </div>
+                <div class="success-video-card-label">Settlement Negotiation</div>
               </div>
-
-              <h3 class="testimonial-card-name">Natanya Brooks, Esq.</h3>
             </article>
 
-            <article class="testimonial-card-fancy">
-              <div class="testimonial-card-number">3</div>
-
-              <div class="testimonial-card-surface">
-                <p class="testimonial-card-text">
-                  Real juror insights gave me the edge few attorneys have.
-                </p>
-              </div>
-
-              <div class="testimonial-card-avatar-wrap">
+            <!-- Video 6 -->
+            <article
+              class="success-video-card"
+              role="button"
+              tabindex="0"
+              aria-label="Play: Courtroom Psychology"
+              data-vimeo-url="https://www.youtube.com/embed/needv1Sm8FU?autoplay=1"
+            >
+              <div class="success-video-card-media">
                 <img
-                  src="assets/sampleperson.png"
-                  alt="Client testimonial"
-                  class="testimonial-card-avatar-image"
+                  src="assets/aboutusthumbnail.png"
+                  alt="Courtroom Psychology"
+                  class="success-video-card-image"
                 />
+                <div class="success-video-card-overlay"></div>
+                <div class="success-video-card-play">
+                  <span class="insights-video-play-pill">
+                    <span class="insights-video-play-icon"></span>
+                  </span>
+                </div>
+                <div class="success-video-card-label">Courtroom Psychology</div>
               </div>
-
-              <h3 class="testimonial-card-name">Participant</h3>
             </article>
 
-            <!-- Row 3 -->
-            <article class="testimonial-card-fancy">
-              <div class="testimonial-card-number">1</div>
-
-              <div class="testimonial-card-surface">
-                <p class="testimonial-card-text">
-                  Ibrahim’s approach helped elevate my trial outcomes.
-                </p>
-              </div>
-
-              <div class="testimonial-card-avatar-wrap">
+            <!-- Video 7 -->
+            <article
+              class="success-video-card"
+              role="button"
+              tabindex="0"
+              aria-label="Play: Building Your Trial Theory"
+              data-vimeo-url="https://www.youtube.com/embed/ww5se_1rsfE?autoplay=1"
+            >
+              <div class="success-video-card-media">
                 <img
-                  src="assets/sampleperson.png"
-                  alt="Client testimonial"
-                  class="testimonial-card-avatar-image"
+                  src="assets/awadthumbnail.png"
+                  alt="Building Your Trial Theory"
+                  class="success-video-card-image"
                 />
+                <div class="success-video-card-overlay"></div>
+                <div class="success-video-card-play">
+                  <span class="insights-video-play-pill">
+                    <span class="insights-video-play-icon"></span>
+                  </span>
+                </div>
+                <div class="success-video-card-label">Building Your Trial Theory</div>
               </div>
-
-              <h3 class="testimonial-card-name">Joe Fried, Esq.</h3>
-            </article>
-
-            <article class="testimonial-card-fancy">
-              <div class="testimonial-card-number">2</div>
-
-              <div class="testimonial-card-surface">
-                <p class="testimonial-card-text">
-                  I learned tools I still use in every settlement negotiation.
-                </p>
-              </div>
-
-              <div class="testimonial-card-avatar-wrap">
-                <img
-                  src="assets/sampleperson.png"
-                  alt="Client testimonial"
-                  class="testimonial-card-avatar-image"
-                />
-              </div>
-
-              <h3 class="testimonial-card-name">Natanya Brooks, Esq.</h3>
-            </article>
-
-            <article class="testimonial-card-fancy">
-              <div class="testimonial-card-number">3</div>
-
-              <div class="testimonial-card-surface">
-                <p class="testimonial-card-text">
-                  Real juror insights gave me the edge few attorneys have.
-                </p>
-              </div>
-
-              <div class="testimonial-card-avatar-wrap">
-                <img
-                  src="assets/sampleperson.png"
-                  alt="Client testimonial"
-                  class="testimonial-card-avatar-image"
-                />
-              </div>
-
-              <h3 class="testimonial-card-name">Participant</h3>
             </article>
           </div>
         </div>
       </section>
 
-      <!-- CTA -->
+      <!-- VIDEO MODAL -->
+      <div class="video-modal" id="videoModal" aria-hidden="true">
+        <div class="video-modal-backdrop" id="closeVideoModal"></div>
+
+        <div class="video-modal-dialog" role="dialog" aria-modal="true" aria-label="Learning video">
+          <button class="video-modal-close" id="videoModalCloseBtn" aria-label="Close video">
+            ×
+          </button>
+
+          <div class="video-modal-frame-shell">
+            <iframe
+              id="videoModalFrame"
+              class="video-modal-frame"
+              src=""
+              title="YouTube video player"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA SECTION -->
       <section class="section-cta">
         <div class="cta-banner">
           <div class="cta-banner-inner">
             <div class="cta-banner-left">
               <h2 class="cta-banner-title">
-                Ready to Level Up Your<br />
-                Trial Advocacy?
+                Ready to Master Your<br />
+                Trial Skills?
               </h2>
             </div>
 
             <div class="cta-banner-actions">
-              <a href="#" class="cta-banner-button cta-banner-button-solid">
-                Join Live Event
+              <a href="contact.html" class="cta-banner-button cta-banner-button-solid">
+                Get More Info
                 <span class="cta-banner-button-arrow">→</span>
               </a>
 
-              <a href="#" class="cta-banner-button cta-banner-button-outline">
-                Access Free Resources
+              <a href="videogallery.html" class="cta-banner-button cta-banner-button-outline">
+                View Free Resources
                 <span class="cta-banner-button-arrow">→</span>
               </a>
             </div>
           </div>
         </div>
       </section>
-
-      <!-- SUBSCRIPTION MODAL FOR FREE RESOURCES -->
-      <div class="subscription-modal">
-        <div class="modal-content">
-          <button class="modal-close" aria-label="Close modal">&times;</button>
-          <h2 class="modal-title">Unlock Free Resources</h2>
-          <p class="modal-subtitle">Subscribe to access exclusive trial advocacy videos and insights.</p>
-          <form class="modal-form" action="https://formspree.io/f/mreykwwa" method="POST">
-            <div class="modal-form-group">
-              <label for="modal-name" class="modal-label">Name</label>
-              <input type="text" name="name" class="modal-input" placeholder="Your Name" required>
-            </div>
-            <div class="modal-form-group">
-              <label for="modal-email" class="modal-label">Email</label>
-              <input type="email" name="email" class="modal-input" placeholder="you@example.com" required>
-              <div class="modal-error-message"></div>
-            </div>
-            <button type="submit" class="modal-cta">Unlock Access</button>
-          </form>
-          <div class="modal-success" style="display: none;">
-            <p>Thank you. Your access has been unlocked.</p>
-            <button class="modal-redirect">Continue to Videos</button>
-          </div>
-        </div>
-      </div>
 
       <!-- FOOTER -->
       <footer class="site-footer">
@@ -455,7 +422,6 @@
 
                 <ul class="site-footer-links-list">
                   <li><a href="aboutus.html" class="site-footer-link">About Us</a></li>
-                  <li><a href="program.html" class="site-footer-link">Program</a></li>
                   <li><a href="learning-center.html" class="site-footer-link">Learning Center</a></li>
                   <li><a href="instructor.html" class="site-footer-link">Instructor</a></li>
                   <li><a href="contact.html" class="site-footer-link">Contact</a></li>
@@ -469,9 +435,9 @@
 
                 <form class="site-footer-form">
                   <div class="site-footer-form-group">
-                    <label for="footer-fullname-testimonials" class="site-footer-label">Fullname</label>
+                    <label for="footer-fullname" class="site-footer-label">Fullname</label>
                     <input
-                      id="footer-fullname-testimonials"
+                      id="footer-fullname"
                       type="text"
                       class="site-footer-input"
                       placeholder="Enter name"
@@ -480,9 +446,9 @@
 
                   <div class="site-footer-form-row">
                     <div class="site-footer-form-group">
-                      <label for="footer-phone-testimonials" class="site-footer-label">Contact No.</label>
+                      <label for="footer-phone" class="site-footer-label">Contact No.</label>
                       <input
-                        id="footer-phone-testimonials"
+                        id="footer-phone"
                         type="text"
                         class="site-footer-input"
                         placeholder="Enter number"
@@ -490,9 +456,9 @@
                     </div>
 
                     <div class="site-footer-form-group">
-                      <label for="footer-email-testimonials" class="site-footer-label">Email</label>
+                      <label for="footer-email" class="site-footer-label">Email</label>
                       <input
-                        id="footer-email-testimonials"
+                        id="footer-email"
                         type="email"
                         class="site-footer-input"
                         placeholder="Enter email"
@@ -501,9 +467,9 @@
                   </div>
 
                   <div class="site-footer-form-group">
-                    <label for="footer-message-testimonials" class="site-footer-label">Message</label>
+                    <label for="footer-message" class="site-footer-label">Message</label>
                     <textarea
-                      id="footer-message-testimonials"
+                      id="footer-message"
                       class="site-footer-textarea"
                       placeholder="Write here..."
                     ></textarea>
@@ -532,4 +498,3 @@
     <script src="js/script.js"></script>
   </body>
 </html>
-
