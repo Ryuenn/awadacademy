@@ -258,6 +258,29 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Learning Center nav link opens subscription modal on non-learning-center pages
+  var learningCenterNavLink = document.getElementById("learningCenterNavLink");
+  if (learningCenterNavLink && subscriptionModal) {
+    // Only prevent default and show modal if not on learning-center.html
+    var isLearningCenterPage = window.location.pathname.includes("learning-center.html");
+    if (!isLearningCenterPage) {
+      learningCenterNavLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        subscriptionModal.classList.add("show");
+        var modalForm = subscriptionModal.querySelector(".modal-form");
+        var modalSuccess = subscriptionModal.querySelector(".modal-success");
+        if (modalForm) modalForm.style.display = "block";
+        if (modalSuccess) modalSuccess.style.display = "none";
+        var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
+        if (emailInput) emailInput.classList.remove("error");
+        var errorMsg = subscriptionModal.querySelector(".modal-error-message");
+        if (errorMsg) errorMsg.style.display = "none";
+        var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
+        if (nameInput) nameInput.focus();
+      });
+    }
+  }
+
   // Hero button opens subscription modal
   var heroCtaButton = document.getElementById("heroCtaButton");
   if (heroCtaButton && subscriptionModal) {
