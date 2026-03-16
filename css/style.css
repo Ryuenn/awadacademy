@@ -1342,9 +1342,8 @@
     inset: 0;
     background: linear-gradient(
       to bottom,
-      rgba(15, 23, 42, 0.2) 0%,
-      rgba(15, 23, 42, 0.7) 60%,
-      rgba(15, 23, 42, 0.95) 100%
+      rgba(15, 23, 42, 0.0) 0%,
+      rgba(15, 23, 42, 0.0) 100%
     );
   }
 
@@ -1363,6 +1362,22 @@
     font-size: 1.125rem;
     font-weight: 600;
   }
+  .events-ribbon {
+  position: absolute;
+  top: 1.8rem;
+  right: -3.2rem;
+  z-index: 10;
+  background: #3a3e60;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.65rem 4rem;
+  transform: rotate(35deg);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
 
   .events-main-card-text {
     font-size: 0.875rem;
@@ -1719,7 +1734,6 @@
   }
 
   .section-testimonials {
-    display: none;
     position: relative;
     overflow: hidden;
     padding-top: 5.5rem;
