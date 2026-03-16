@@ -1362,21 +1362,25 @@
     font-size: 1.125rem;
     font-weight: 600;
   }
-  .events-ribbon {
+.events-ribbon {
   position: absolute;
-  top: 1.8rem;
-  right: -3.2rem;
+  top: 2.4rem;
+  right: -4rem;
   z-index: 10;
-  background: #3a3e60;
+  background: #dc2626;
   color: #ffffff;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 900;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  padding: 0.65rem 4rem;
+  padding: 1rem 5.5rem;
   transform: rotate(35deg);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  box-shadow: 
+    0 6px 20px rgba(220, 38, 38, 0.6),
+    0 2px 8px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   pointer-events: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
   .events-main-card-text {
@@ -1485,17 +1489,17 @@
     margin-top: 0.25rem;
     align-self: flex-start;
     border-radius: 999px;
-    background-color: #111827;
+    background-color: #3a3e60;
     padding: 0.375rem 1rem;
     font-size: 0.75rem;
     font-weight: 600;
     color: #f9fafb;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.75);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
     transition: background-color 150ms ease;
   }
 
   .events-side-card-button:hover {
-    background-color: #22c55e;
+    background-color: #323754;
   }
 
   /* HOW IT WORKS - REDESIGNED */
@@ -1781,19 +1785,18 @@
     min-height: 2.7rem;
     padding: 0.8rem 1.4rem;
     border-radius: 999px;
-    background: linear-gradient(
-      180deg,
-      rgba(94, 98, 149, 0.96) 0%,
-      rgba(69, 74, 121, 0.96) 100%
-    );
+    background-color: #3a3e60;
     color: #ffffff;
     font-size: 0.58rem;
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    box-shadow:
-      0 10px 25px rgba(31, 41, 55, 0.4),
-      0 0 28px rgba(186, 194, 255, 0.28);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
+    transition: background-color 150ms ease;
+  }
+
+  .testimonials-cta:hover {
+    background-color: #323754;
   }
 
   .testimonials-cta-arrow {
@@ -1971,26 +1974,32 @@
   .success-video-grid-layout {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.6rem 1.8rem;
+    gap: 1.25rem;
   }
 
   .success-video-card {
-    border-radius: 1.5rem;
-    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.55);
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
     background: transparent;
+    cursor: pointer;
+    transition: transform 200ms ease, box-shadow 200ms ease;
   }
 
   .success-video-card-media {
     position: relative;
-    border-radius: 1.5rem;
+    border-radius: 1rem;
     overflow: hidden;
+    aspect-ratio: 16 / 9;
   }
 
   .success-video-card-image {
     display: block;
     width: 100%;
-    height: 180px;
+    height: 100%;        /* change from 220px to 100% */
     object-fit: cover;
+    object-position: center;
+    position: absolute;
+    inset: 0;
   }
 
   .success-video-card-overlay {
@@ -2000,22 +2009,29 @@
   }
 
   .success-video-card-label {
-    position: absolute;
-    left: 50%;
-    bottom: 0.95rem;
-    transform: translateX(-50%);
-    padding: 0.4rem 0.9rem;
-    border-radius: 999px;
-    background: rgba(15, 23, 42, 0.9);
-    color: #f9fafb;
+    position: static;        /* move out of absolute */
+    display: block;
+    padding: 0.6rem 0.5rem 0;
+    color: rgba(226, 232, 240, 0.85);
     font-size: 0.72rem;
     font-weight: 600;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    text-align: center;
+    background: none;
+    border-radius: 0;
+    transform: none;
+    left: auto;
+    right: auto;
+    bottom: auto;
   }
+  .success-video-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6);
+  }
+  .success-video-grid-layout > article:last-child:nth-child(odd) {
+    grid-column: 1 / 2;
+}
 
   .success-video-card-play {
     position: absolute;
