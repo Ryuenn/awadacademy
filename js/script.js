@@ -266,6 +266,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!isLearningCenterPage) {
       learningCenterNavLink.addEventListener("click", function (e) {
         e.preventDefault();
+        // Set the modal to redirect to learning center
+        subscriptionModal.setAttribute("data-redirect-page", "learning-center.html");
         subscriptionModal.classList.add("show");
         var modalForm = subscriptionModal.querySelector(".modal-form");
         var modalSuccess = subscriptionModal.querySelector(".modal-success");
@@ -522,8 +524,9 @@ document.addEventListener("DOMContentLoaded", function () {
           localStorage.setItem("awadSubscribed", "true");
           
           // Redirect after brief delay
+          var redirectPage = (subscriptionModal.dataset.redirectPage) ? subscriptionModal.dataset.redirectPage : "videogallery.html";
           setTimeout(function() {
-            window.location.href = "videogallery.html";
+            window.location.href = redirectPage;
           }, 2000);
         })
         .catch(function(error) {
@@ -540,8 +543,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Redirect button click (fallback if user manually clicks)
     if (redirectBtn) {
-      redirectBtn.addEventListener("click", function () {
-        window.location.href = "videogallery.html";
+      redirectBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        var redirectPage = (subscriptionModal.dataset.redirectPage) ? subscriptionModal.dataset.redirectPage : "videogallery.html";
+        window.location.href = redirectPage;
       });
     }
 
