@@ -5494,3 +5494,13 @@
       transform: translateX(-50%);
     }
   }
+  /* ===== MacBook-size hero text adjustment ===== */
+@media (min-width: 1024px) and (max-width: 1600px) {
+  .hero-content-shell {
+    bottom: 8px;
+  }
+
+  .hero-content {
+    padding-bottom: 1rem;
+  }
+}
