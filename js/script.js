@@ -12,22 +12,188 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (navToggles.length && navLinks) {
+    // Backdrop + header injected once (mobile drawer)
+    var navBackdrop = document.querySelector(".mobile-nav-backdrop");
+    if (!navBackdrop) {
+      navBackdrop = document.createElement("div");
+      navBackdrop.className = "mobile-nav-backdrop";
+      navBackdrop.setAttribute("aria-hidden", "true");
+      document.body.appendChild(navBackdrop);
+    }
+
+    function ensureMobileNavHeader() {
+      if (navLinks.querySelector(".mobile-nav-header")) return;
+      var header = document.createElement("div");
+      header.className = "mobile-nav-header";
+
+      var brand = document.createElement("div");
+      brand.className = "mobile-nav-brand";
+      var logo = document.createElement("img");
+      logo.src = "assets/awadacademylogo.png";
+      logo.alt = "Awad Academy";
+      var title = document.createElement("div");
+      title.className = "mobile-nav-title";
+      title.innerHTML = "<strong>Menu</strong><span>Navigate</span>";
+      brand.appendChild(logo);
+      brand.appendChild(title);
+
+      var closeBtn = document.createElement("button");
+      closeBtn.className = "mobile-nav-close";
+      closeBtn.type = "button";
+      closeBtn.setAttribute("aria-label", "Close menu");
+      closeBtn.innerHTML =
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">' +
+        '<path d="M18 6L6 18" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"/>' +
+        '<path d="M6 6L18 18" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"/>' +
+        "</svg>";
+
+      header.appendChild(brand);
+      header.appendChild(closeBtn);
+      navLinks.insertBefore(header, navLinks.firstChild);
+
+      closeBtn.addEventListener("click", function () {
+        closeMobileNav();
+      });
+    }
+
+    function ensureMobileNavList() {
+      if (navLinks.querySelector(".mobile-nav-list")) return;
+
+      // Build a clean, mobile-only menu from the existing navbar markup.
+      var list = document.createElement("div");
+      list.className = "mobile-nav-list";
+
+      function makeLink(label, href) {
+        var a = document.createElement("a");
+        a.className = "mobile-nav-link";
+        a.href = href;
+        a.textContent = label;
+        return a;
+      }
+
+      function makeAccordion(label, items) {
+        var wrap = document.createElement("div");
+        wrap.className = "mobile-nav-accordion";
+
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "mobile-nav-accordion-trigger";
+        btn.setAttribute("aria-expanded", "false");
+        btn.innerHTML =
+          "<span>" +
+          label +
+          "</span><span class=\"mobile-nav-accordion-caret\" aria-hidden=\"true\">▾</span>";
+
+        var panel = document.createElement("div");
+        panel.className = "mobile-nav-accordion-panel";
+
+        items.forEach(function (it) {
+          panel.appendChild(makeLink(it.label, it.href));
+        });
+
+        btn.addEventListener("click", function () {
+          var isOpen = wrap.classList.contains("is-open");
+          // single-open inside the drawer
+          Array.prototype.slice
+            .call(list.querySelectorAll(".mobile-nav-accordion"))
+            .forEach(function (node) {
+              if (node !== wrap) {
+                node.classList.remove("is-open");
+                var t = node.querySelector(".mobile-nav-accordion-trigger");
+                if (t) t.setAttribute("aria-expanded", "false");
+              }
+            });
+          wrap.classList.toggle("is-open", !isOpen);
+          btn.setAttribute("aria-expanded", !isOpen ? "true" : "false");
+        });
+
+        wrap.appendChild(btn);
+        wrap.appendChild(panel);
+        return wrap;
+      }
+
+      // Parse existing items
+      Array.prototype.slice.call(navLinks.children).forEach(function (child) {
+        if (!child || child.classList && (child.classList.contains("mobile-nav-header") || child.classList.contains("mobile-nav-list"))) {
+          return;
+        }
+
+        // Plain top-level links
+        if (child.tagName === "A" && child.getAttribute("href")) {
+          list.appendChild(makeLink(child.textContent.trim(), child.getAttribute("href")));
+          return;
+        }
+
+        // Dropdowns (About / Academy)
+        if (child.classList && child.classList.contains("nav-dropdown")) {
+          var trigger = child.querySelector(".nav-link-has-dropdown");
+          var menu = child.querySelector(".nav-dropdown-menu");
+          if (!trigger || !menu) return;
+          var label = trigger.textContent.replace("▾", "").trim();
+          var submenuItems = [];
+          Array.prototype.slice.call(menu.querySelectorAll("a[href]")).forEach(function (a) {
+            submenuItems.push({ label: a.textContent.trim(), href: a.getAttribute("href") });
+          });
+          list.appendChild(makeAccordion(label, submenuItems));
+        }
+      });
+
+      navLinks.appendChild(list);
+
+      // Clicking any mobile link (non-accordion trigger) closes the drawer
+      list.addEventListener("click", function (e) {
+        var a = e.target && e.target.closest ? e.target.closest("a") : null;
+        if (!a) return;
+        if (!isMobile()) return;
+        closeMobileNav();
+      });
+    }
+
+    function setNavOpenState(isOpen) {
+      navToggles.forEach(function (btn) {
+        btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+      navLinks.classList.toggle("is-open", isOpen);
+      document.body.classList.toggle("nav-open", isOpen);
+    }
+
+    function openMobileNav() {
+      if (!isMobile()) return;
+      ensureMobileNavHeader();
+      ensureMobileNavList();
+      setNavOpenState(true);
+    }
+
+    function closeMobileNav() {
+      setNavOpenState(false);
+    }
+
     navToggles.forEach(function(navToggle) {
       navToggle.addEventListener("click", function () {
         if (!isMobile()) return;
         var expanded = navLinks.classList.contains("is-open");
-        navToggles.forEach(function(btn) {
-          btn.setAttribute("aria-expanded", expanded ? "false" : "true");
-        });
-        navLinks.classList.toggle("is-open");
+        if (expanded) closeMobileNav();
+        else openMobileNav();
       });
     });
+
+    // Close on backdrop click
+    navBackdrop.addEventListener("click", function () {
+      closeMobileNav();
+    });
+
+    // Legacy dropdown markup is hidden on mobile; the mobile list handles its own clicks.
+
+    // ESC closes
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && navLinks.classList.contains("is-open")) {
+        closeMobileNav();
+      }
+    });
+
     window.addEventListener("resize", function () {
       if (!isMobile()) {
-        navLinks.classList.remove("is-open");
-        navToggles.forEach(function(btn) {
-          btn.setAttribute("aria-expanded", "false");
-        });
+        closeMobileNav();
       }
     });
   }
