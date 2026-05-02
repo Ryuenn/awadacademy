@@ -462,7 +462,8 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
-    object-position: center 75%;
+    /* Bias upward so more of the top of the photo stays in frame */
+    object-position: center 38%;
     filter: brightness(1) saturate(1) contrast(1);
   }
 
@@ -871,30 +872,33 @@
 
   .what-we-do-images-shell {
     position: relative;
+    isolation: isolate;
     margin-left: auto;
     margin-right: auto;
     height: 17rem;
     max-width: 25rem;
   }
 
+  /* Strong diffuse white backlight behind cutouts (::before stays z-index 0, imgs at 1) */
   .what-we-do-images-shell::before {
     content: "";
     position: absolute;
-    left: 62%;
-    top: 52%;
+    left: 58%;
+    top: 46%;
     transform: translate(-50%, -50%);
-    width: 70%;
-    height: 115%;
+    width: 82%;
+    height: 122%;
     border-radius: 999px;
     background: radial-gradient(
       ellipse at center,
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(255, 255, 255, 0.65) 30%,
-      rgba(255, 255, 255, 0.35) 50%,
-      rgba(255, 255, 255, 0.08) 70%,
-      transparent 85%
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(255, 255, 255, 0.78) 18%,
+      rgba(255, 255, 255, 0.52) 38%,
+      rgba(255, 255, 255, 0.22) 58%,
+      rgba(255, 255, 255, 0.06) 72%,
+      transparent 88%
     );
-    filter: blur(32px);
+    filter: blur(36px);
     z-index: 0;
     pointer-events: none;
   }
@@ -916,35 +920,38 @@
   .what-we-do-image-left {
     position: absolute;
     bottom: -53px;
-    left: 25%;
+    left: 40%;
     height: 100%;
     width: auto;
     object-fit: contain;
-    transform: translateX(-50%) scale(1.5);
+    transform: translateX(-50%) scale(1.38);
     transform-origin: bottom;
     z-index: 1;
-    filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.7))
-            drop-shadow(0 0 35px rgba(255, 255, 255, 0.45))
-            drop-shadow(0 0 55px rgba(255, 255, 255, 0.25));
+    filter: drop-shadow(0 0 42px rgba(255, 255, 255, 0.72))
+      drop-shadow(0 0 72px rgba(255, 255, 255, 0.38))
+      drop-shadow(0 14px 28px rgba(15, 23, 42, 0.55))
+      drop-shadow(0 6px 16px rgba(99, 102, 241, 0.22));
   }
 
   .what-we-do-image-left-flipped {
-    transform: translateX(-50%) scale(-1.5, 1.5);
+    transform: translateX(-50%) scale(-1.38, 1.38);
   }
 
   .what-we-do-image-right {
     position: absolute;
     bottom: -53px;
-    right: -250px;
+    right: -215px;
     width: auto;
     height: 100%;
     object-fit: contain;
     transform-origin: bottom;
-    transform: translateX(-50%) scale(1.1);
+    /* Horizontal flip so figure faces right (toward off-canvas / outer edge) */
+    transform: translateX(-50%) scale(-1.1, 1.1);
     z-index: 1;
-    filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.7))
-            drop-shadow(0 0 35px rgba(255, 255, 255, 0.45))
-            drop-shadow(0 0 55px rgba(255, 255, 255, 0.25));
+    filter: drop-shadow(0 0 42px rgba(255, 255, 255, 0.72))
+      drop-shadow(0 0 72px rgba(255, 255, 255, 0.38))
+      drop-shadow(0 14px 28px rgba(15, 23, 42, 0.55))
+      drop-shadow(0 6px 16px rgba(99, 102, 241, 0.22));
   }
 
   .what-we-do-pill-experience {
@@ -1027,7 +1034,7 @@
     position: relative;
     padding-top: 4.5rem;
     padding-bottom: 4.5rem;
-    background-image: url("../assets/basher123.jpg");
+    background-image: url("../assets/bash.JPG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -2099,9 +2106,53 @@
     transform: translateY(-3px);
     box-shadow: 0 14px 35px rgba(0, 0, 0, 0.6);
   }
-  .success-video-grid-layout > article:last-child:nth-child(odd) {
+  .success-video-grid .success-video-grid-layout > article:last-child:nth-child(odd) {
     grid-column: 1 / 2;
-}
+  }
+
+  .learning-video-library-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .learning-video-library-inner {
+      gap: 3.5rem;
+    }
+  }
+
+  .learning-series {
+    margin: 0;
+  }
+
+  .learning-series-header {
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+  }
+
+  .learning-series-title {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #f1f5f9;
+  }
+
+  @media (min-width: 640px) {
+    .learning-series-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  .learning-series-meta {
+    margin: 0.45rem 0 0;
+    max-width: 42rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgba(203, 213, 225, 0.72);
+  }
 
   .success-video-card-play {
     position: absolute;
@@ -2555,6 +2606,29 @@
   @media (min-width: 992px) {
     .page-instructor .founder-main-image {
       transform: translateX(0.18rem);
+    }
+  }
+
+  /* Ibrahim cutout: square panel + nudge (instructor page + home Meet Ibrahim section) */
+  .founder-image-panel:has(.founder-main-image-ibrahim) {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .founder-main-image.founder-main-image-ibrahim {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+    object-fit: contain;
+    transform: translate(-0.06rem, 0.55rem);
+  }
+
+  @media (min-width: 992px) {
+    .founder-main-image.founder-main-image-ibrahim {
+      transform: translate(0.10rem, 0.55rem);
     }
   }
 
@@ -5172,6 +5246,7 @@
     opacity: 0;
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
     position: relative;
+    overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
   }
 
@@ -5303,23 +5378,29 @@
   }
 
   .modal-cta:disabled {
-    opacity: 0.8;
+    opacity: 0.92;
     cursor: not-allowed;
     transform: none;
+  }
+
+  .modal-cta.loading {
+    color: transparent;
   }
 
   .modal-cta.loading::after {
     content: '';
     position: absolute;
-    right: 1.5rem;
+    left: 50%;
     top: 50%;
-    width: 1rem;
-    height: 1rem;
-    margin-top: -0.5rem;
-    border: 2px solid rgba(31, 36, 48, 0.3);
-    border-top-color: rgba(31, 36, 48, 0.8);
+    right: auto;
+    width: 1.35rem;
+    height: 1.35rem;
+    margin: -0.675rem 0 0 -0.675rem;
+    border: 2.5px solid rgba(31, 36, 48, 0.18);
+    border-top-color: rgba(31, 36, 48, 0.92);
     border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+    animation: spin 0.65s linear infinite;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
   }
 
   @keyframes spin {
@@ -5365,6 +5446,53 @@
 
   .modal-redirect:active {
     transform: translateY(-2px) scale(0.98);
+  }
+
+  .modal-nav-busy {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(12, 14, 20, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.28s ease, visibility 0.28s ease;
+  }
+
+  .subscription-modal.is-navigating .modal-nav-busy {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .modal-nav-busy-inner {
+    text-align: center;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .modal-nav-busy-spinner {
+    width: 46px;
+    height: 46px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    border: 3px solid rgba(165, 180, 252, 0.2);
+    border-top-color: #c7d2fe;
+    animation: spin 0.72s linear infinite;
+    box-shadow: 0 0 24px rgba(99, 102, 241, 0.25);
+  }
+
+  .modal-nav-busy-text {
+    margin: 0;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: rgba(226, 232, 240, 0.9);
   }
 
   @keyframes fadeInUp {
@@ -5471,14 +5599,14 @@
     }
 
     .what-we-do-image-left {
-      left: 35%;
-      transform: translateX(-50%) scale(-1.2, 1.2);
+      left: 40%;
+      transform: translateX(-50%) scale(-1.1, 1.1);
     }
 
     .what-we-do-image-right {
-      right: -20%;
+      right: -14%;
       left: auto;
-      transform: translateX(0) scale(1);
+      transform: translateX(0) scale(-1, 1);
     }
 
     .what-we-do-pill-experience {

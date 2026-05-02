@@ -76,7 +76,7 @@
                 <div class="nav-dropdown-menu">
                   <a href="aboutus.html" class="nav-dropdown-item">About Awad Academy</a>
                   <a href="faqs.html" class="nav-dropdown-item">FAQs</a>
-                  <a href="gallery.html" class="nav-dropdown-item">Academy Gallery</a>
+                  <a href="gallery.html" class="nav-dropdown-item">Photo Gallery</a>
                 </div>
               </div>
               <div class="nav-dropdown">
@@ -135,8 +135,8 @@
         <div class="hero-shell">
           <div class="hero-background">
             <img
-              src="assets/homepage1.jpg"
-              alt="Awad Academy group"
+              src="assets/ibrahimteach.JPG"
+              alt="Ibrahim Awad teaching at Awad Academy"
               class="hero-background-image"
             />
             <div class="hero-overlay-gradient"></div>
@@ -183,10 +183,10 @@
               <div class="what-we-do-left">
                 <p class="what-we-do-intro">
                   <span class="what-we-do-highlight">Awad Academy</span>
-                  empowers personal injury attorneys and trial lawyers with advanced
-                  courtroom and litigation skills — taught by veteran trial attorney
-                  Ibrahim Awad. Whether you&apos;re seeking higher settlements or
-                  stronger verdicts, our training is built on real courtroom success.
+                  Awad Academy equips injury attorneys with the strategies and skills needed to maximize the value of their cases.
+                   Led by founder and trial attorney Ibrahim J. Awad, our programs focus on advanced courtroom and litigation 
+                   techniques grounded in real-world results. Whether your goal is higher settlements or stronger verdicts, our 
+                   training is built on proven success in the courtroom.
                 </p>
 
                 <dl class="what-we-do-checklist">
@@ -214,13 +214,13 @@
 
                 <div class="what-we-do-images-shell">
                   <img
-                    src="assets/instructor.png"
-                    alt="Ibrahim Awad presenting"
+                    src="assets/brownsuit-big.png"
+                    alt="Ibrahim Awad"
                     class="what-we-do-image-left what-we-do-image-left-flipped"
                   />
                   <img
-                    src="assets/ibrahimfacingleft.png"
-                    alt="Ibrahim Awad speaking"
+                    src="assets/brownsuit-small.png"
+                    alt="Ibrahim Awad"
                     class="what-we-do-image-right"
                   />
 
@@ -419,7 +419,7 @@
             <p class="section-eyebrow testimonials-eyebrow">Testimonials</p>
             <h2 class="testimonials-title">What Attendees Are Saying</h2>
 
-            <a href="#" class="testimonials-cta">
+            <a href="program.html" class="testimonials-cta">
               Learn more about the program
               <span class="testimonials-cta-arrow">→</span>
             </a>
@@ -564,9 +564,9 @@
             <div class="founder-visual-column">
               <div class="founder-image-panel">
                 <img
-                  src="assets/awadcoat.png"
+                  src="assets/brownsuit-big.png"
                   alt="Ibrahim Awad"
-                  class="founder-main-image"
+                  class="founder-main-image founder-main-image-ibrahim"
                 />
               </div>
 
@@ -703,22 +703,29 @@
                   <li><a href="learning-center.html" class="site-footer-link">Learning Center</a></li>
                   <li><a href="instructor.html" class="site-footer-link">Instructor</a></li>
                   <li><a href="contact.html" class="site-footer-link">Contact</a></li>
-                  <li><a href="#" class="site-footer-link">Privacy &amp; Policy</a></li>
-                  <li><a href="#" class="site-footer-link">Terms &amp; Condition</a></li>
+                  <li><a href="mailto:info@awadacademy.com?subject=Privacy%20%26%20Policy%20inquiry" class="site-footer-link">Privacy &amp; Policy</a></li>
+                  <li><a href="mailto:info@awadacademy.com?subject=Terms%20%26%20Conditions%20inquiry" class="site-footer-link">Terms &amp; Condition</a></li>
                 </ul>
               </div>
 
               <div class="site-footer-form-column">
                 <h3 class="site-footer-column-title">Questions? Contact Us!</h3>
 
-                <form class="site-footer-form">
+                <form
+                  class="site-footer-form"
+                  action="https://formspree.io/f/mreykwwa"
+                  method="POST"
+                >
+                  <input type="hidden" name="_subject" value="Footer form — Awad Academy site" />
                   <div class="site-footer-form-group">
                     <label for="footer-fullname" class="site-footer-label">Fullname</label>
                     <input
                       id="footer-fullname"
+                      name="name"
                       type="text"
                       class="site-footer-input"
                       placeholder="Enter name"
+                      autocomplete="name"
                     />
                   </div>
 
@@ -727,9 +734,11 @@
                       <label for="footer-phone" class="site-footer-label">Contact No.</label>
                       <input
                         id="footer-phone"
+                        name="phone"
                         type="text"
                         class="site-footer-input"
                         placeholder="Enter number"
+                        autocomplete="tel"
                       />
                     </div>
 
@@ -737,9 +746,12 @@
                       <label for="footer-email" class="site-footer-label">Email</label>
                       <input
                         id="footer-email"
+                        name="email"
                         type="email"
                         class="site-footer-input"
                         placeholder="Enter email"
+                        required
+                        autocomplete="email"
                       />
                     </div>
                   </div>
@@ -748,8 +760,10 @@
                     <label for="footer-message" class="site-footer-label">Message</label>
                     <textarea
                       id="footer-message"
+                      name="message"
                       class="site-footer-textarea"
                       placeholder="Write here..."
+                      required
                     ></textarea>
                   </div>
 

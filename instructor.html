@@ -24,6 +24,17 @@
                 class="logo-image"
               />
             </a>
+            <button
+              class="nav-toggle-button"
+              id="navToggle"
+              aria-label="Toggle navigation"
+              aria-expanded="false"
+              aria-controls="main-nav-links"
+            >
+              <span class="nav-toggle-bar"></span>
+              <span class="nav-toggle-bar"></span>
+              <span class="nav-toggle-bar"></span>
+            </button>
             <div class="top-contact-meta">
               <span class="top-contact-item">
                 <span style="margin-left: 16px;">
@@ -63,7 +74,7 @@
                 <div class="nav-dropdown-menu">
                   <a href="aboutus.html" class="nav-dropdown-item">About Awad Academy</a>
                   <a href="faqs.html" class="nav-dropdown-item">FAQs</a>
-                  <a href="gallery.html" class="nav-dropdown-item">Academy Gallery</a>
+                  <a href="gallery.html" class="nav-dropdown-item">Photo Gallery</a>
                 </div>
               </div>
               <div class="nav-dropdown">
@@ -128,9 +139,9 @@
             <div class="founder-visual-column">
               <div class="founder-image-panel">
                 <img
-                  src="assets/instructor.png"
+                  src="assets/brownsuit-big.png"
                   alt="Ibrahim Awad"
-                  class="founder-main-image"
+                  class="founder-main-image founder-main-image-ibrahim"
                 />
               </div>
 
@@ -188,7 +199,7 @@
 
             <div class="founder-copy-right">
               <p class="founder-description">
-                <strong>Attorney Hassan</strong> completed his undergraduate studies at the University
+                <strong>Attorney Basher Hassan</strong> completed his undergraduate studies at the University
                 of Georgia, where he obtained a Psychology degree in just three years. He then earned
                 his Juris Doctorate at Georgia State University, while also receiving the Health Law
                 Certificate. <strong>Attorney Hassan</strong> became a member of the Georgia Bar in 2021.
@@ -308,22 +319,29 @@
                   <li><a href="learning-center.html" class="site-footer-link">Learning Center</a></li>
                   <li><a href="instructor.html" class="site-footer-link">Instructor</a></li>
                   <li><a href="contact.html" class="site-footer-link">Contact</a></li>
-                  <li><a href="#" class="site-footer-link">Privacy &amp; Policy</a></li>
-                  <li><a href="#" class="site-footer-link">Terms &amp; Condition</a></li>
+                  <li><a href="mailto:info@awadacademy.com?subject=Privacy%20%26%20Policy%20inquiry" class="site-footer-link">Privacy &amp; Policy</a></li>
+                  <li><a href="mailto:info@awadacademy.com?subject=Terms%20%26%20Conditions%20inquiry" class="site-footer-link">Terms &amp; Condition</a></li>
                 </ul>
               </div>
 
               <div class="site-footer-form-column">
                 <h3 class="site-footer-column-title">Questions? Contact Us!</h3>
 
-                <form class="site-footer-form">
+                <form
+                  class="site-footer-form"
+                  action="https://formspree.io/f/mreykwwa"
+                  method="POST"
+                >
+                  <input type="hidden" name="_subject" value="Footer form — Awad Academy site" />
                   <div class="site-footer-form-group">
                     <label for="footer-fullname-instructor" class="site-footer-label">Fullname</label>
                     <input
                       id="footer-fullname-instructor"
+                      name="name"
                       type="text"
                       class="site-footer-input"
                       placeholder="Enter name"
+                      autocomplete="name"
                     />
                   </div>
 
@@ -332,9 +350,11 @@
                       <label for="footer-phone-instructor" class="site-footer-label">Contact No.</label>
                       <input
                         id="footer-phone-instructor"
+                        name="phone"
                         type="text"
                         class="site-footer-input"
                         placeholder="Enter number"
+                        autocomplete="tel"
                       />
                     </div>
 
@@ -342,9 +362,12 @@
                       <label for="footer-email-instructor" class="site-footer-label">Email</label>
                       <input
                         id="footer-email-instructor"
+                        name="email"
                         type="email"
                         class="site-footer-input"
                         placeholder="Enter email"
+                        required
+                        autocomplete="email"
                       />
                     </div>
                   </div>
@@ -353,8 +376,10 @@
                     <label for="footer-message-instructor" class="site-footer-label">Message</label>
                     <textarea
                       id="footer-message-instructor"
+                      name="message"
                       class="site-footer-textarea"
                       placeholder="Write here..."
+                      required
                     ></textarea>
                   </div>
 

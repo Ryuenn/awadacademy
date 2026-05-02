@@ -140,6 +140,39 @@ document.addEventListener("DOMContentLoaded", function () {
   var watchMoreVideosBtn = document.getElementById("watchMoreVideosBtn");
   var subscriptionModal = document.querySelector(".subscription-modal");
 
+  function showSubscriptionSignupModal(redirectPage, modalEl) {
+    var m = modalEl || subscriptionModal;
+    if (!m) return;
+    var page = redirectPage || "videogallery.html";
+    m.setAttribute("data-redirect-page", page);
+    m.classList.remove("is-navigating");
+    m.classList.add("show");
+    var modalForm = m.querySelector(".modal-form");
+    var modalSuccess = m.querySelector(".modal-success");
+    if (modalForm) modalForm.style.display = "block";
+    if (modalSuccess) modalSuccess.style.display = "none";
+    var emailInput = m.querySelector(".modal-input[type='email']");
+    if (emailInput) emailInput.classList.remove("error");
+    var errorMsg = m.querySelector(".modal-error-message");
+    if (errorMsg) errorMsg.style.display = "none";
+    var nameInput = m.querySelector(".modal-input[type='text']");
+    if (nameInput) nameInput.focus();
+  }
+
+  document.querySelectorAll(".subscription-modal").forEach(function (m) {
+    var content = m.querySelector(".modal-content");
+    if (!content || content.querySelector(".modal-nav-busy")) return;
+    var busy = document.createElement("div");
+    busy.className = "modal-nav-busy";
+    busy.setAttribute("aria-hidden", "true");
+    busy.innerHTML =
+      '<div class="modal-nav-busy-inner">' +
+      '<div class="modal-nav-busy-spinner" aria-hidden="true"></div>' +
+      '<p class="modal-nav-busy-text">Taking you there…</p>' +
+      "</div>";
+    content.appendChild(busy);
+  });
+
   function openVideoModal(url) {
     if (!videoModal || !videoModalFrame) return;
     videoModalFrame.src = url;
@@ -169,19 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (isGalleryVideo(trigger)) {
           e.preventDefault();
           e.stopPropagation();
-          if (subscriptionModal) {
-            subscriptionModal.classList.add("show");
-            var modalForm = subscriptionModal.querySelector(".modal-form");
-            var modalSuccess = subscriptionModal.querySelector(".modal-success");
-            if (modalForm) modalForm.style.display = "block";
-            if (modalSuccess) modalSuccess.style.display = "none";
-            var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
-            if (emailInput) emailInput.classList.remove("error");
-            var errorMsg = subscriptionModal.querySelector(".modal-error-message");
-            if (errorMsg) errorMsg.style.display = "none";
-            var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
-            if (nameInput) nameInput.focus();
-          }
+          showSubscriptionSignupModal("videogallery.html");
         } else {
           openVideoModal(url);
         }
@@ -191,15 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           if (isGalleryVideo(trigger)) {
-            if (subscriptionModal) {
-              subscriptionModal.classList.add("show");
-              var modalForm = subscriptionModal.querySelector(".modal-form");
-              var modalSuccess = subscriptionModal.querySelector(".modal-success");
-              if (modalForm) modalForm.style.display = "block";
-              if (modalSuccess) modalSuccess.style.display = "none";
-              var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
-              if (nameInput) nameInput.focus();
-            }
+            showSubscriptionSignupModal("videogallery.html");
           } else {
             openVideoModal(url);
           }
@@ -223,115 +236,52 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Watch More Videos button opens subscription modal
-  if (watchMoreVideosBtn && subscriptionModal) {
+  if (watchMoreVideosBtn) {
     watchMoreVideosBtn.addEventListener("click", function () {
-      subscriptionModal.classList.add("show");
-      var modalForm = subscriptionModal.querySelector(".modal-form");
-      var modalSuccess = subscriptionModal.querySelector(".modal-success");
-      if (modalForm) modalForm.style.display = "block";
-      if (modalSuccess) modalSuccess.style.display = "none";
-      var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
-      if (emailInput) emailInput.classList.remove("error");
-      var errorMsg = subscriptionModal.querySelector(".modal-error-message");
-      if (errorMsg) errorMsg.style.display = "none";
-      var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
-      if (nameInput) nameInput.focus();
+      showSubscriptionSignupModal("videogallery.html");
     });
   }
 
-  // Free Resources nav link opens subscription modal
+  // Free Resources nav link opens subscription modal (always gallery after unlock)
   var freeResourcesNavLink = document.getElementById("freeResourcesNavLink");
-  if (freeResourcesNavLink && subscriptionModal) {
+  if (freeResourcesNavLink) {
     freeResourcesNavLink.addEventListener("click", function (e) {
       e.preventDefault();
-      subscriptionModal.classList.add("show");
-      var modalForm = subscriptionModal.querySelector(".modal-form");
-      var modalSuccess = subscriptionModal.querySelector(".modal-success");
-      if (modalForm) modalForm.style.display = "block";
-      if (modalSuccess) modalSuccess.style.display = "none";
-      var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
-      if (emailInput) emailInput.classList.remove("error");
-      var errorMsg = subscriptionModal.querySelector(".modal-error-message");
-      if (errorMsg) errorMsg.style.display = "none";
-      var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
-      if (nameInput) nameInput.focus();
+      showSubscriptionSignupModal("videogallery.html");
     });
   }
 
   // Learning Center nav link opens subscription modal on non-learning-center pages
   var learningCenterNavLink = document.getElementById("learningCenterNavLink");
-  if (learningCenterNavLink && subscriptionModal) {
-    // Only prevent default and show modal if not on learning-center.html
+  if (learningCenterNavLink) {
     var isLearningCenterPage = window.location.pathname.includes("learning-center.html");
     if (!isLearningCenterPage) {
       learningCenterNavLink.addEventListener("click", function (e) {
         e.preventDefault();
-        // Set the modal to redirect to learning center
-        subscriptionModal.setAttribute("data-redirect-page", "learning-center.html");
-        subscriptionModal.classList.add("show");
-        var modalForm = subscriptionModal.querySelector(".modal-form");
-        var modalSuccess = subscriptionModal.querySelector(".modal-success");
-        if (modalForm) modalForm.style.display = "block";
-        if (modalSuccess) modalSuccess.style.display = "none";
-        var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
-        if (emailInput) emailInput.classList.remove("error");
-        var errorMsg = subscriptionModal.querySelector(".modal-error-message");
-        if (errorMsg) errorMsg.style.display = "none";
-        var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
-        if (nameInput) nameInput.focus();
+        showSubscriptionSignupModal("learning-center.html");
       });
     }
   }
 
   // Hero button opens subscription modal
   var heroCtaButton = document.getElementById("heroCtaButton");
-  if (heroCtaButton && subscriptionModal) {
+  if (heroCtaButton) {
     heroCtaButton.addEventListener("click", function () {
-      subscriptionModal.classList.add("show");
-      var modalForm = subscriptionModal.querySelector(".modal-form");
-      var modalSuccess = subscriptionModal.querySelector(".modal-success");
-      if (modalForm) modalForm.style.display = "block";
-      if (modalSuccess) modalSuccess.style.display = "none";
-      var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
-      if (emailInput) emailInput.classList.remove("error");
-      var errorMsg = subscriptionModal.querySelector(".modal-error-message");
-      if (errorMsg) errorMsg.style.display = "none";
-      var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
-      if (nameInput) nameInput.focus();
+      showSubscriptionSignupModal("videogallery.html");
     });
   }
 
   // Program overview section buttons open subscription modal
   var programJoinBtn = document.getElementById("programJoinTrainingBtn");
   var programWatchBtn = document.getElementById("programWatchVideosBtn");
-  if (programJoinBtn && subscriptionModal) {
+  if (programJoinBtn) {
     programJoinBtn.addEventListener("click", function () {
-      subscriptionModal.classList.add("show");
-      var modalForm = subscriptionModal.querySelector(".modal-form");
-      var modalSuccess = subscriptionModal.querySelector(".modal-success");
-      if (modalForm) modalForm.style.display = "block";
-      if (modalSuccess) modalSuccess.style.display = "none";
-      var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
-      if (emailInput) emailInput.classList.remove("error");
-      var errorMsg = subscriptionModal.querySelector(".modal-error-message");
-      if (errorMsg) errorMsg.style.display = "none";
-      var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
-      if (nameInput) nameInput.focus();
+      showSubscriptionSignupModal("videogallery.html");
     });
   }
-  if (programWatchBtn && subscriptionModal) {
+  if (programWatchBtn) {
     programWatchBtn.addEventListener("click", function () {
-      subscriptionModal.classList.add("show");
-      var modalForm = subscriptionModal.querySelector(".modal-form");
-      var modalSuccess = subscriptionModal.querySelector(".modal-success");
-      if (modalForm) modalForm.style.display = "block";
-      if (modalSuccess) modalSuccess.style.display = "none";
-      var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
-      if (emailInput) emailInput.classList.remove("error");
-      var errorMsg = subscriptionModal.querySelector(".modal-error-message");
-      if (errorMsg) errorMsg.style.display = "none";
-      var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
-      if (nameInput) nameInput.focus();
+      showSubscriptionSignupModal("videogallery.html");
     });
   }
 
@@ -340,25 +290,11 @@ document.addEventListener("DOMContentLoaded", function () {
   if (freeResourcesLink) {
     freeResourcesLink.addEventListener("click", function (e) {
       e.preventDefault();
-      
-      var subscriptionModal = document.querySelector(".subscription-modal");
-      if (subscriptionModal) {
-        subscriptionModal.classList.add("show");
-        
-        var modalForm = subscriptionModal.querySelector(".modal-form");
-        var modalSuccess = subscriptionModal.querySelector(".modal-success");
-        var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
-        var emailInput = subscriptionModal.querySelector(".modal-input[type='email']");
-        var errorMsg = subscriptionModal.querySelector(".modal-error-message");
-        
-        if (modalForm) {
-          modalForm.style.display = "block";
-          modalForm.reset();
-        }
-        if (modalSuccess) modalSuccess.style.display = "none";
-        if (emailInput) emailInput.classList.remove("error");
-        if (errorMsg) errorMsg.style.display = "none";
-        if (nameInput) nameInput.focus();
+      var m = document.querySelector(".subscription-modal");
+      if (m) {
+        showSubscriptionSignupModal("videogallery.html", m);
+        var modalForm = m.querySelector(".modal-form");
+        if (modalForm) modalForm.reset();
       }
     });
   }
@@ -417,20 +353,20 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
 
-    // Open modal for "Access Free Resources" button
+    // Open modal for "Access Free Resources" button (always post-unlock → gallery)
     resourcesBtn.addEventListener("click", function (e) {
       e.preventDefault();
-      subscriptionModal.classList.add("show");
-      if (modalForm) modalForm.style.display = "block";
-      if (modalSuccess) modalSuccess.style.display = "none";
+      showSubscriptionSignupModal("videogallery.html", subscriptionModal);
       clearEmailError();
-      var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
-      if (nameInput) nameInput.focus();
     });
 
     // Close modal functions
     var closeModal = function() {
       subscriptionModal.classList.remove("show");
+      subscriptionModal.classList.remove("is-navigating");
+      if (redirectBtn) {
+        redirectBtn.textContent = "Continue to Videos";
+      }
       if (modalForm) {
         modalForm.style.display = "block";
         modalForm.reset();
@@ -479,11 +415,14 @@ document.addEventListener("DOMContentLoaded", function () {
         var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
         var nameValue = nameInput ? nameInput.value.trim() : "";
 
+        var lockedRedirect = (subscriptionModal.getAttribute("data-redirect-page") || "videogallery.html").trim();
+        if (!lockedRedirect) lockedRedirect = "videogallery.html";
+
         // Show loading state
         if (submitBtn) {
           submitBtn.classList.add("loading");
           submitBtn.disabled = true;
-          submitBtn.textContent = "Unlocking access...";
+          submitBtn.textContent = "Sending…";
         }
 
         // Submit to Formspree using fetch with JSON
@@ -512,6 +451,12 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(function(data) {
           // Success - show modal success message
           if (modalForm) modalForm.style.display = "none";
+          if (submitBtn) {
+            submitBtn.classList.remove("loading");
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Unlock Access";
+          }
+          subscriptionModal.setAttribute("data-redirect-page", lockedRedirect);
           if (modalSuccess) {
             modalSuccess.style.display = "block";
             var successText = modalSuccess.querySelector("p");
@@ -519,15 +464,13 @@ document.addEventListener("DOMContentLoaded", function () {
               successText.textContent = "Thank you! Check your email for access details.";
             }
           }
-          
-          // Save subscription state
+          if (redirectBtn) {
+            var toLearning = lockedRedirect.indexOf("learning-center") !== -1;
+            redirectBtn.textContent = toLearning
+              ? "Continue to Learning Center"
+              : "Continue to Free Resources";
+          }
           localStorage.setItem("awadSubscribed", "true");
-          
-          // Redirect after brief delay
-          var redirectPage = (subscriptionModal.dataset.redirectPage) ? subscriptionModal.dataset.redirectPage : "videogallery.html";
-          setTimeout(function() {
-            window.location.href = redirectPage;
-          }, 2000);
         })
         .catch(function(error) {
           console.error("Error:", error);
@@ -541,12 +484,14 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
-    // Redirect button click (fallback if user manually clicks)
     if (redirectBtn) {
       redirectBtn.addEventListener("click", function (e) {
         e.preventDefault();
-        var redirectPage = (subscriptionModal.dataset.redirectPage) ? subscriptionModal.dataset.redirectPage : "videogallery.html";
-        window.location.href = redirectPage;
+        var redirectPage = (subscriptionModal.getAttribute("data-redirect-page") || "videogallery.html").trim() || "videogallery.html";
+        subscriptionModal.classList.add("is-navigating");
+        setTimeout(function () {
+          window.location.href = redirectPage;
+        }, 420);
       });
     }
 
@@ -557,5 +502,15 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "contact.html";
       }, 120);
     });
+  });
+
+  document.querySelectorAll('form[action*="formspree.io"]').forEach(function (form) {
+    if (form.classList.contains("modal-form")) return;
+    if (form.querySelector('input[name="_next"]')) return;
+    var nextInput = document.createElement("input");
+    nextInput.type = "hidden";
+    nextInput.name = "_next";
+    nextInput.value = window.location.href.split("#")[0];
+    form.insertBefore(nextInput, form.firstChild);
   });
 });

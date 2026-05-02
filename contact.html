@@ -24,6 +24,17 @@
                 class="logo-image"
               />
             </a>
+            <button
+              class="nav-toggle-button"
+              id="navToggle"
+              aria-label="Toggle navigation"
+              aria-expanded="false"
+              aria-controls="main-nav-links"
+            >
+              <span class="nav-toggle-bar"></span>
+              <span class="nav-toggle-bar"></span>
+              <span class="nav-toggle-bar"></span>
+            </button>
 
             <div class="top-contact-meta">
               <span class="top-contact-item">
@@ -66,7 +77,7 @@
                 <div class="nav-dropdown-menu">
                   <a href="aboutus.html" class="nav-dropdown-item">About Awad Academy</a>
                   <a href="faqs.html" class="nav-dropdown-item">FAQs</a>
-                  <a href="gallery.html" class="nav-dropdown-item">Academy Gallery</a>
+                  <a href="gallery.html" class="nav-dropdown-item">Photo Gallery</a>
                 </div>
               </div>
               <div class="nav-dropdown">
@@ -149,24 +160,34 @@
           </div>
 
           <div class="contact-main-form-shell">
-            <form class="contact-main-form">
+            <form
+              class="contact-main-form"
+              action="https://formspree.io/f/mreykwwa"
+              method="POST"
+            >
+              <input type="hidden" name="_subject" value="Contact page — Awad Academy" />
               <div class="contact-form-grid">
                 <div class="contact-form-group">
                   <label for="contact-fullname" class="contact-label">Full Name</label>
                   <input
                     id="contact-fullname"
+                    name="name"
                     type="text"
                     class="contact-input"
                     placeholder="Enter your full name"
+                    autocomplete="name"
                   />
                 </div>
                 <div class="contact-form-group">
                   <label for="contact-email" class="contact-label">Email</label>
                   <input
                     id="contact-email"
+                    name="email"
                     type="email"
                     class="contact-input"
                     placeholder="Enter your email"
+                    required
+                    autocomplete="email"
                   />
                 </div>
               </div>
@@ -176,14 +197,16 @@
                   <label for="contact-phone" class="contact-label">Contact No.</label>
                   <input
                     id="contact-phone"
+                    name="phone"
                     type="text"
                     class="contact-input"
                     placeholder="Enter phone number"
+                    autocomplete="tel"
                   />
                 </div>
                 <div class="contact-form-group">
                   <label for="contact-subject" class="contact-label">Topic</label>
-                  <select id="contact-subject" class="contact-input contact-select">
+                  <select id="contact-subject" name="topic" class="contact-input contact-select">
                     <option value="">Select a topic</option>
                     <option value="training">Live Trainings &amp; Events</option>
                     <option value="program">Program Details</option>
@@ -197,8 +220,10 @@
                 <label for="contact-message" class="contact-label">Message</label>
                 <textarea
                   id="contact-message"
+                  name="message"
                   class="contact-textarea"
                   placeholder="Share a bit about your case, team, or question..."
+                  required
                 ></textarea>
               </div>
 
@@ -326,22 +351,29 @@
                   <li><a href="learning-center.html" class="site-footer-link">Learning Center</a></li>
                   <li><a href="instructor.html" class="site-footer-link">Instructor</a></li>
                   <li><a href="contact.html" class="site-footer-link">Contact</a></li>
-                  <li><a href="#" class="site-footer-link">Privacy &amp; Policy</a></li>
-                  <li><a href="#" class="site-footer-link">Terms &amp; Condition</a></li>
+                  <li><a href="mailto:info@awadacademy.com?subject=Privacy%20%26%20Policy%20inquiry" class="site-footer-link">Privacy &amp; Policy</a></li>
+                  <li><a href="mailto:info@awadacademy.com?subject=Terms%20%26%20Conditions%20inquiry" class="site-footer-link">Terms &amp; Condition</a></li>
                 </ul>
               </div>
 
               <div class="site-footer-form-column">
                 <h3 class="site-footer-column-title">Questions? Contact Us!</h3>
 
-                <form class="site-footer-form">
+                <form
+                  class="site-footer-form"
+                  action="https://formspree.io/f/mreykwwa"
+                  method="POST"
+                >
+                  <input type="hidden" name="_subject" value="Footer form — Awad Academy site" />
                   <div class="site-footer-form-group">
                     <label for="footer-fullname-contact" class="site-footer-label">Fullname</label>
                     <input
                       id="footer-fullname-contact"
+                      name="name"
                       type="text"
                       class="site-footer-input"
                       placeholder="Enter name"
+                      autocomplete="name"
                     />
                   </div>
 
@@ -350,9 +382,11 @@
                       <label for="footer-phone-contact" class="site-footer-label">Contact No.</label>
                       <input
                         id="footer-phone-contact"
+                        name="phone"
                         type="text"
                         class="site-footer-input"
                         placeholder="Enter number"
+                        autocomplete="tel"
                       />
                     </div>
 
@@ -360,9 +394,12 @@
                       <label for="footer-email-contact" class="site-footer-label">Email</label>
                       <input
                         id="footer-email-contact"
+                        name="email"
                         type="email"
                         class="site-footer-input"
                         placeholder="Enter email"
+                        required
+                        autocomplete="email"
                       />
                     </div>
                   </div>
@@ -371,8 +408,10 @@
                     <label for="footer-message-contact" class="site-footer-label">Message</label>
                     <textarea
                       id="footer-message-contact"
+                      name="message"
                       class="site-footer-textarea"
                       placeholder="Write here..."
+                      required
                     ></textarea>
                   </div>
 
