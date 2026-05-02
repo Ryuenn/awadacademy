@@ -5600,9 +5600,10 @@
     }
 
     .what-we-do-image-right {
-      right: -14%;
+      bottom: -36px;
+      right: -12%;
       left: auto;
-      transform: translateX(0) scale(-1, 1);
+      transform: translate(-5px, 0) scale(-0.88, 0.88);
     }
 
     .what-we-do-pill-experience {
