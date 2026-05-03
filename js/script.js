@@ -140,11 +140,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
       navLinks.appendChild(list);
 
-      // Clicking any mobile link (non-accordion trigger) closes the drawer
+      // Mobile submenu links are cloned without ids — mirror desktop Learning Center → modal
       list.addEventListener("click", function (e) {
         var a = e.target && e.target.closest ? e.target.closest("a") : null;
         if (!a) return;
         if (!isMobile()) return;
+        var href = (a.getAttribute("href") || "").trim();
+        var onLearningCenterPage = window.location.pathname.indexOf("learning-center.html") !== -1;
+        if (href.indexOf("learning-center.html") !== -1 && !onLearningCenterPage) {
+          e.preventDefault();
+          showSubscriptionSignupModal("learning-center.html");
+        }
         closeMobileNav();
       });
     }
@@ -429,11 +435,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Hero button opens subscription modal
+  // Hero CTA opens subscription modal (redirect to Learning Center after unlock)
   var heroCtaButton = document.getElementById("heroCtaButton");
   if (heroCtaButton) {
     heroCtaButton.addEventListener("click", function () {
-      showSubscriptionSignupModal("videogallery.html");
+      showSubscriptionSignupModal("learning-center.html");
     });
   }
 
