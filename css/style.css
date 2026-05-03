@@ -4170,28 +4170,26 @@
     }
   }
 
+  /* Horizontal padding matches .section-inner (1rem) so hero copy lines up with content below */
   .about-hero-content {
     position: relative;
     z-index: 2;
-    padding: 2.5rem 1.5rem 3rem;
+    padding: 2.5rem 1rem 3rem;
     max-width: 72rem;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
   }
 
-  @media (min-width: 640px) {
-    .about-hero-content {
-      padding-left: 2.5rem;
-      padding-right: 2.5rem;
-    }
+  /* Same max-width as .success-video-grid-inner (64rem) so hero copy aligns with the grid below */
+  .page-learning-center .about-hero-content,
+  .page-video-gallery .about-hero-content {
+    max-width: 67rem;
   }
 
-  @media (min-width: 1024px) {
-    .about-hero-content {
-      padding-left: 3rem;
-      padding-right: 3rem;
-    }
+  /* Matches .page-events .events-featured-shell (1040px) */
+  .page-events .about-hero-content {
+    max-width: 68rem;
   }
 
   .about-hero-title {
@@ -4524,6 +4522,16 @@
     overflow: hidden;
   }
 
+  /* Match .program-overview horizontal padding: gutter on the section, not inside the text column */
+  .page-program .program-hero {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .page-program .program-hero-content {
+    padding: 2.5rem 0 3rem;
+  }
+
   .program-hero-background {
     position: absolute;
     inset: 0;
@@ -4593,25 +4601,11 @@
   .program-hero-content {
     position: relative;
     z-index: 2;
-    padding: 2.5rem 1.5rem 3rem;
+    padding: 2.5rem 1rem 3rem;
     max-width: 72rem;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
-  }
-
-  @media (min-width: 640px) {
-    .program-hero-content {
-      padding-left: 2.5rem;
-      padding-right: 2.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .program-hero-content {
-      padding-left: 3rem;
-      padding-right: 3rem;
-    }
   }
 
   .program-hero-title {

@@ -453,7 +453,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   if (programWatchBtn) {
     programWatchBtn.addEventListener("click", function () {
-      showSubscriptionSignupModal("videogallery.html");
+      showSubscriptionSignupModal("learning-center.html");
     });
   }
 
