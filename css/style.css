@@ -2822,17 +2822,32 @@
   }
 
   .founder-main-image.founder-main-image-ibrahim {
+    position: relative;
+    z-index: 1;
     width: auto;
     max-width: 100%;
     height: auto;
     max-height: 100%;
     object-fit: contain;
-    transform: translate(-0.06rem, 0.55rem);
+    object-position: center bottom;
+    /* PNG has empty space left of figure; slight shift left balances in the panel */
+    transform: translate(-6%, 0.55rem);
   }
 
   @media (min-width: 992px) {
     .founder-main-image.founder-main-image-ibrahim {
-      transform: translate(0.10rem, 0.55rem);
+      transform: translate(-6%, 0.55rem);
+    }
+  }
+
+  /* Home page only: tiny shift right in Meet Ibrahim (instructor stays unchanged) */
+  .page-root:not(.page-instructor) .founder-main-image.founder-main-image-ibrahim {
+    transform: translate(calc(-6% + 0.35rem), 0.55rem);
+  }
+
+  @media (min-width: 992px) {
+    .page-root:not(.page-instructor) .founder-main-image.founder-main-image-ibrahim {
+      transform: translate(calc(-6% + 0.45rem), 0.55rem);
     }
   }
 
