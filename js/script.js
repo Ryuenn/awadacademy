@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function showSubscriptionSignupModal(redirectPage, modalEl) {
     var m = modalEl || subscriptionModal;
     if (!m) return;
-    var page = redirectPage || "videogallery.html";
+    var page = redirectPage || "learning-center.html";
     m.setAttribute("data-redirect-page", page);
     m.classList.remove("is-navigating");
     m.classList.add("show");
@@ -374,7 +374,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (isGalleryVideo(trigger)) {
           e.preventDefault();
           e.stopPropagation();
-          showSubscriptionSignupModal("videogallery.html");
+          showSubscriptionSignupModal("learning-center.html");
         } else {
           openVideoModal(url);
         }
@@ -384,7 +384,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           if (isGalleryVideo(trigger)) {
-            showSubscriptionSignupModal("videogallery.html");
+            showSubscriptionSignupModal("learning-center.html");
           } else {
             openVideoModal(url);
           }
@@ -410,16 +410,16 @@ document.addEventListener("DOMContentLoaded", function () {
   // Watch More Videos button opens subscription modal
   if (watchMoreVideosBtn) {
     watchMoreVideosBtn.addEventListener("click", function () {
-      showSubscriptionSignupModal("videogallery.html");
+      showSubscriptionSignupModal("learning-center.html");
     });
   }
 
-  // Free Resources nav link opens subscription modal (always gallery after unlock)
+  // Legacy nav link → subscription modal (Learning Center after unlock)
   var freeResourcesNavLink = document.getElementById("freeResourcesNavLink");
   if (freeResourcesNavLink) {
     freeResourcesNavLink.addEventListener("click", function (e) {
       e.preventDefault();
-      showSubscriptionSignupModal("videogallery.html");
+      showSubscriptionSignupModal("learning-center.html");
     });
   }
 
@@ -448,7 +448,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var programWatchBtn = document.getElementById("programWatchVideosBtn");
   if (programJoinBtn) {
     programJoinBtn.addEventListener("click", function () {
-      showSubscriptionSignupModal("videogallery.html");
+      showSubscriptionSignupModal("learning-center.html");
     });
   }
   if (programWatchBtn) {
@@ -457,14 +457,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Free Resources navbar trigger - open subscription modal
+  // Navbar trigger → subscription modal (Learning Center after unlock)
   var freeResourcesLink = document.getElementById("videoGalleryNavLink");
   if (freeResourcesLink) {
     freeResourcesLink.addEventListener("click", function (e) {
       e.preventDefault();
       var m = document.querySelector(".subscription-modal");
       if (m) {
-        showSubscriptionSignupModal("videogallery.html", m);
+        showSubscriptionSignupModal("learning-center.html", m);
         var modalForm = m.querySelector(".modal-form");
         if (modalForm) modalForm.reset();
       }
@@ -525,10 +525,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
 
-    // Open modal for "Access Free Resources" button (always post-unlock → gallery)
+    // Open modal for outline CTA (post-unlock → Learning Center)
     resourcesBtn.addEventListener("click", function (e) {
       e.preventDefault();
-      showSubscriptionSignupModal("videogallery.html", subscriptionModal);
+      showSubscriptionSignupModal("learning-center.html", subscriptionModal);
       clearEmailError();
     });
 
@@ -537,7 +537,7 @@ document.addEventListener("DOMContentLoaded", function () {
       subscriptionModal.classList.remove("show");
       subscriptionModal.classList.remove("is-navigating");
       if (redirectBtn) {
-        redirectBtn.textContent = "Continue to Videos";
+        redirectBtn.textContent = "Continue to Learning Center";
       }
       if (modalForm) {
         modalForm.style.display = "block";
@@ -587,8 +587,8 @@ document.addEventListener("DOMContentLoaded", function () {
         var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
         var nameValue = nameInput ? nameInput.value.trim() : "";
 
-        var lockedRedirect = (subscriptionModal.getAttribute("data-redirect-page") || "videogallery.html").trim();
-        if (!lockedRedirect) lockedRedirect = "videogallery.html";
+        var lockedRedirect = (subscriptionModal.getAttribute("data-redirect-page") || "learning-center.html").trim();
+        if (!lockedRedirect) lockedRedirect = "learning-center.html";
 
         // Show loading state
         if (submitBtn) {
@@ -640,7 +640,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var toLearning = lockedRedirect.indexOf("learning-center") !== -1;
             redirectBtn.textContent = toLearning
               ? "Continue to Learning Center"
-              : "Continue to Free Resources";
+              : "Continue";
           }
           localStorage.setItem("awadSubscribed", "true");
         })
@@ -659,7 +659,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (redirectBtn) {
       redirectBtn.addEventListener("click", function (e) {
         e.preventDefault();
-        var redirectPage = (subscriptionModal.getAttribute("data-redirect-page") || "videogallery.html").trim() || "videogallery.html";
+        var redirectPage = (subscriptionModal.getAttribute("data-redirect-page") || "learning-center.html").trim() || "learning-center.html";
         subscriptionModal.classList.add("is-navigating");
         setTimeout(function () {
           window.location.href = redirectPage;
