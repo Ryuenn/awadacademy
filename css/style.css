@@ -1226,7 +1226,7 @@
     overflow: hidden;
   }
 
-  /* Slight soften on photo — keep detail readable */
+  /* Full-sharp photo — contrast comes from overlay opacity, not blur */
   .section-success-story::before {
     content: "";
     position: absolute;
@@ -1235,7 +1235,6 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    filter: blur(2.5px);
     z-index: 0;
     pointer-events: none;
   }
@@ -1243,15 +1242,15 @@
   .success-story-overlay {
     position: absolute;
     inset: 0;
-    /* Same indigo / navy language as .section-what-we-do & .contact-main, tuned over photography */
+    /* Theme-tinted scrim: slightly stronger than with blur, so type stays legible on a sharp photo */
     background:
-      radial-gradient(circle at 12% 18%, rgba(119, 125, 205, 0.28) 0%, transparent 42%),
-      radial-gradient(circle at 88% 85%, rgba(88, 99, 190, 0.26) 0%, transparent 48%),
+      radial-gradient(circle at 12% 18%, rgba(119, 125, 205, 0.3) 0%, transparent 42%),
+      radial-gradient(circle at 88% 85%, rgba(88, 99, 190, 0.28) 0%, transparent 48%),
       linear-gradient(
         165deg,
-        rgba(14, 16, 20, 0.55) 0%,
-        rgba(18, 22, 35, 0.48) 45%,
-        rgba(11, 15, 24, 0.52) 100%
+        rgba(14, 16, 20, 0.66) 0%,
+        rgba(18, 22, 35, 0.58) 45%,
+        rgba(11, 15, 24, 0.62) 100%
       );
     z-index: 1;
     pointer-events: none;
