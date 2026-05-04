@@ -2851,7 +2851,8 @@
   @media (max-width: 991px) {
     .page-root:not(.page-instructor) .founder-main-image.founder-main-image-ibrahim {
       transform-origin: center bottom;
-      transform: translate(calc(-6% + 0.35rem), 1.1rem) scale(1.32);
+      /* Lower in frame so the head stays inside the panel (overflow clips the top when zoomed) */
+      transform: translate(calc(-6% + 0.35rem), 6rem) scale(1.24);
     }
   }
 
