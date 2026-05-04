@@ -2787,10 +2787,13 @@
     );
     filter: blur(24px);
     pointer-events: none;
+    z-index: 0;
   }
 
   .founder-main-image {
     display: block;
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: auto;
     object-fit: contain;
@@ -2831,23 +2834,30 @@
     object-fit: contain;
     object-position: center bottom;
     /* PNG has empty space left of figure; slight shift left balances in the panel */
-    transform: translate(-6%, 0.55rem);
+    transform: translate(-6%, 0.85rem);
   }
 
   @media (min-width: 992px) {
     .founder-main-image.founder-main-image-ibrahim {
-      transform: translate(-6%, 0.55rem);
+      transform: translate(-6%, 0.85rem);
     }
   }
 
   /* Home page only: tiny shift right in Meet Ibrahim (instructor stays unchanged) */
   .page-root:not(.page-instructor) .founder-main-image.founder-main-image-ibrahim {
-    transform: translate(calc(-6% + 0.35rem), 0.55rem);
+    transform: translate(calc(-6% + 0.35rem), 1rem);
+  }
+
+  @media (max-width: 991px) {
+    .page-root:not(.page-instructor) .founder-main-image.founder-main-image-ibrahim {
+      transform-origin: center bottom;
+      transform: translate(calc(-6% + 0.35rem), 1.1rem) scale(1.32);
+    }
   }
 
   @media (min-width: 992px) {
     .page-root:not(.page-instructor) .founder-main-image.founder-main-image-ibrahim {
-      transform: translate(calc(-6% + 0.45rem), 0.55rem);
+      transform: translate(calc(-6% + 0.45rem), 1rem);
     }
   }
 
@@ -3461,14 +3471,14 @@
   /* Zoom Ibrahim cutout in Meet section (instructor only; panel overflow clips edges) */
   .page-instructor .founder-main-image.founder-main-image-ibrahim {
     transform-origin: center bottom;
-    /* Push cutout down so the head stays inside the panel (overflow clips the top when over-zoomed) */
-    transform: translate(-10%, 6rem) scale(1.19);
+    /* Mobile / tablet: stronger zoom (992px+ overrides below) */
+    transform: translate(-8%, 16rem) scale(1.75);
     object-position: center 100%;
   }
 
   @media (min-width: 992px) {
     .page-instructor .founder-main-image.founder-main-image-ibrahim {
-      transform: translate(-10%, 18.5rem) scale(1.7);
+      transform: translate(-10%, 20.25rem) scale(1.75);
     }
   }
 
