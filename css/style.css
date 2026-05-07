@@ -1634,17 +1634,20 @@
   }
 .events-ribbon {
   position: absolute;
-  top: 1.2rem;
-  right: -5rem;
+  top: 2.8rem;
+  right: -4.5rem;
   z-index: 10;
   background: #ffffff;
   color: #3a3e60;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 900;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  padding: 1rem 5.5rem;
-  transform: rotate(35deg);
+  padding: 0.65rem 0;
+  text-align: center;
+  width: 16rem;
+  transform: rotate(45deg);
+  transform-origin: center center;
   box-shadow: 
     0 6px 20px rgba(255, 255, 255, 0.5),
     0 2px 8px rgba(255, 255, 255, 0.3),
