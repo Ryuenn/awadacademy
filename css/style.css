@@ -1631,6 +1631,7 @@
   .events-main-card-title {
     font-size: 1.125rem;
     font-weight: 600;
+    margin: 0 0 0.25rem;
   }
 .events-ribbon {
   position: absolute;
@@ -1660,6 +1661,7 @@
   .events-main-card-text {
     font-size: 0.875rem;
     color: #4b5563;
+    margin: 0;
   }
 
   .events-main-card-button {
