@@ -2739,6 +2739,10 @@
   .founder-image-panel {
     position: relative;
     width: min(100%, 24rem);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
     border-radius: 1.15rem;
     background: linear-gradient(
       180deg,
@@ -2833,6 +2837,18 @@
     transform: translate(-6%, 0.85rem);
   }
 
+  /* Basher cutout: scale up to fill the square panel */
+  .founder-main-image.founder-main-image-basher {
+    transform-origin: center bottom;
+    transform: translateY(1rem) scale(1.6);
+  }
+
+  @media (min-width: 992px) {
+    .founder-main-image.founder-main-image-basher {
+      transform: translateY(1rem) scale(2.1);
+    }
+  }
+
   @media (min-width: 992px) {
     .founder-main-image.founder-main-image-ibrahim {
       transform: translate(-6%, 0.85rem);
@@ -2841,7 +2857,8 @@
 
   /* Home page only: tiny shift right in Meet Ibrahim (instructor stays unchanged) */
   .page-root:not(.page-instructor) .founder-main-image.founder-main-image-ibrahim {
-    transform: translate(calc(-6% + 0.35rem), 1rem);
+    transform-origin: center bottom;
+    transform: translate(calc(-6% + 0.35rem), 1rem) scale(1.18);
   }
 
   @media (max-width: 991px) {
@@ -2854,7 +2871,8 @@
 
   @media (min-width: 992px) {
     .page-root:not(.page-instructor) .founder-main-image.founder-main-image-ibrahim {
-      transform: translate(calc(-6% + 0.45rem), 1rem);
+      transform-origin: center bottom;
+      transform: translate(calc(0% + 0.45rem), 11.5rem) scale(2.50);
     }
   }
 
@@ -2977,7 +2995,7 @@
   @media (max-width: 767px) {
     .section-founder {
       padding-top: 4.8rem;
-      padding-bottom: 5rem;
+      padding-bottom: 2.5rem;
     }
 
     .founder-title {
@@ -3461,21 +3479,20 @@
 
   @media (max-width: 767px) {
     .page-instructor .section-founder {
-      padding-top: 5rem;
+      padding-top: 2.5rem;
     }
   }
 
-  /* Zoom Ibrahim cutout in Meet section (instructor only; panel overflow clips edges) */
+  /* Match the homepage "Meet Ibrahim" positioning */
   .page-instructor .founder-main-image.founder-main-image-ibrahim {
     transform-origin: center bottom;
-    /* Mobile / tablet: stronger zoom (992px+ overrides below) */
-    transform: translate(-8%, 16rem) scale(1.75);
-    object-position: center 100%;
+    transform: translate(calc(-6% + 0.35rem), 1rem) scale(1.18);
+    object-position: center bottom;
   }
 
   @media (min-width: 992px) {
     .page-instructor .founder-main-image.founder-main-image-ibrahim {
-      transform: translate(-10%, 20.25rem) scale(1.75);
+      transform: translate(calc(0% + 0.45rem), 11.5rem) scale(2.50);
     }
   }
 
