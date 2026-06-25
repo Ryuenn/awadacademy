@@ -2840,7 +2840,7 @@
   /* Basher cutout: scale up to fill the square panel */
   .founder-main-image.founder-main-image-basher {
     transform-origin: center bottom;
-    transform: translateY(1rem) scale(1.6);
+    transform: translateY(1rem) scale(2.2);
   }
 
   @media (min-width: 992px) {
