@@ -3494,7 +3494,7 @@
     .page-instructor .founder-main-image.founder-main-image-ibrahim {
       transform-origin: center bottom;
       /* Lower in frame so the head stays inside the panel (overflow clips the top when zoomed) */
-      transform: translate(calc(-6% + 0.35rem), 10rem) scale(2.5);
+      transform: translate(calc(-5% + 0.99rem), 10rem) scale(2.6);
     }
   }
 
