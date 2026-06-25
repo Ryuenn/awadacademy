@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "awadacademy.com" }],
+      "destination": "https://www.awadacademy.com/:path*",
+      "permanent": true
+    }
+  ]
+}

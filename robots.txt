@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /_duplicates/
 
-Sitemap: https://awadacademy.com/sitemap.xml
+Sitemap: https://www.awadacademy.com/sitemap.xml
