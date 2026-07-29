@@ -7695,3 +7695,13 @@
     transition: none;
   }
 }
+
+/* Full-width fact card (used when the fact list has an odd count) */
+.signup-fact--wide {
+  grid-column: 1 / -1;
+}
+
+.signup-subtitle strong {
+  color: #ede9fe;
+  font-weight: 700;
+}
