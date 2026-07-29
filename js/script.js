@@ -583,6 +583,10 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
+        // Honeypot — silently drop bot submissions
+        var modalHoney = modalForm.querySelector('input[name="_honey"]');
+        if (modalHoney && modalHoney.value.trim() !== "") return;
+
         // Get form data
         var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
         var nameValue = nameInput ? nameInput.value.trim() : "";
@@ -597,13 +601,13 @@ document.addEventListener("DOMContentLoaded", function () {
           submitBtn.textContent = "Sending…";
         }
 
-        // Submit to Formspree using fetch with JSON
-        var data = {
-          name: nameValue,
-          email: emailValue
-        };
+        // Submit to FormSubmit's AJAX endpoint; hidden _subject/_cc/_template fields ride along
+        var data = serializeForm(modalForm);
+        data.name = nameValue;
+        data.email = emailValue;
+        data["Page URL"] = window.location.href;
 
-        fetch("https://formspree.io/f/mreykwwa", {
+        fetch(modalForm.action, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -613,11 +617,12 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(function(response) {
           return response.json().then(function(json) {
-            if (response.ok) {
+            if (response.ok && isFormSubmitSuccess(json)) {
               return json;
-            } else {
-              throw new Error("Form submission failed");
             }
+            var err = new Error(formSubmitMessage(json) || "Form submission failed");
+            err.fromServer = true;
+            throw err;
           });
         })
         .then(function(data) {
@@ -646,7 +651,11 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(function(error) {
           console.error("Error:", error);
-          showEmailError("There was an error sending your email. Please try again.");
+          showEmailError(
+            error && error.fromServer && error.message
+              ? error.message
+              : "There was an error sending your email. Please try again."
+          );
           if (submitBtn) {
             submitBtn.classList.remove("loading");
             submitBtn.disabled = false;
@@ -676,13 +685,160 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  document.querySelectorAll('form[action*="formspree.io"]').forEach(function (form) {
+  // ===== FORMSUBMIT (AJAX) =====
+  // Forms post to https://formsubmit.co/ajax/<recipient> and get JSON back, so the
+  // page never navigates away — results are shown in the status modal below.
+
+  function serializeForm(form) {
+    var data = {};
+    var fields = form.querySelectorAll("input, select, textarea");
+    fields.forEach(function (field) {
+      if (!field.name || field.disabled) return;
+      if ((field.type === "checkbox" || field.type === "radio") && !field.checked) return;
+      data[field.name] = field.value;
+    });
+    return data;
+  }
+
+  // FormSubmit answers with {"success": "true"} — the flag comes back as a string.
+  function isFormSubmitSuccess(json) {
+    if (!json) return false;
+    return json.success === true || json.success === "true";
+  }
+
+  function formSubmitMessage(json) {
+    return json && typeof json.message === "string" ? json.message : "";
+  }
+
+  var formStatusModal = null;
+
+  function getFormStatusModal() {
+    if (formStatusModal) return formStatusModal;
+
+    formStatusModal = document.createElement("div");
+    formStatusModal.className = "form-status-modal";
+    formStatusModal.setAttribute("role", "dialog");
+    formStatusModal.setAttribute("aria-modal", "true");
+    formStatusModal.setAttribute("aria-hidden", "true");
+    formStatusModal.innerHTML =
+      '<div class="form-status-card">' +
+      '<button type="button" class="form-status-close" aria-label="Close">&times;</button>' +
+      '<div class="form-status-icon" aria-hidden="true"></div>' +
+      '<h3 class="form-status-title"></h3>' +
+      '<p class="form-status-text"></p>' +
+      '<button type="button" class="form-status-button">Close</button>' +
+      "</div>";
+    document.body.appendChild(formStatusModal);
+
+    formStatusModal.addEventListener("click", function (e) {
+      if (
+        e.target === formStatusModal ||
+        e.target.classList.contains("form-status-close") ||
+        e.target.classList.contains("form-status-button")
+      ) {
+        closeFormStatus();
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeFormStatus();
+    });
+
+    return formStatusModal;
+  }
+
+  function showFormStatus(isSuccess, title, text) {
+    var m = getFormStatusModal();
+    m.classList.toggle("is-success", !!isSuccess);
+    m.classList.toggle("is-error", !isSuccess);
+    m.querySelector(".form-status-icon").textContent = isSuccess ? "✓" : "!";
+    m.querySelector(".form-status-title").textContent = title;
+    m.querySelector(".form-status-text").textContent = text;
+    m.setAttribute("aria-hidden", "false");
+    m.classList.add("show");
+    var closeBtn = m.querySelector(".form-status-button");
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closeFormStatus() {
+    if (!formStatusModal || !formStatusModal.classList.contains("show")) return;
+    formStatusModal.classList.remove("show");
+    formStatusModal.setAttribute("aria-hidden", "true");
+  }
+
+  document.querySelectorAll('form[action*="formsubmit.co"]').forEach(function (form) {
+    // The subscription modal form runs its own submit flow (unlock + redirect)
     if (form.classList.contains("modal-form")) return;
-    if (form.querySelector('input[name="_next"]')) return;
-    var nextInput = document.createElement("input");
-    nextInput.type = "hidden";
-    nextInput.name = "_next";
-    nextInput.value = window.location.href.split("#")[0];
-    form.insertBefore(nextInput, form.firstChild);
+
+    var submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (form.getAttribute("data-sending") === "true") return;
+
+      // Honeypot — silently drop bot submissions
+      var honey = form.querySelector('input[name="_honey"]');
+      if (honey && honey.value.trim() !== "") return;
+
+      if (typeof form.checkValidity === "function" && !form.checkValidity()) {
+        if (typeof form.reportValidity === "function") form.reportValidity();
+        return;
+      }
+
+      var data = serializeForm(form);
+      data["Page URL"] = window.location.href;
+
+      var originalBtn = submitBtn ? submitBtn.innerHTML : "";
+      form.setAttribute("data-sending", "true");
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = "Sending…";
+      }
+
+      var restore = function () {
+        form.removeAttribute("data-sending");
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtn;
+        }
+      };
+
+      fetch(form.action, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+        .then(function (response) {
+          return response.json().then(function (json) {
+            if (response.ok && isFormSubmitSuccess(json)) return json;
+            var err = new Error(formSubmitMessage(json) || "Form submission failed");
+            err.fromServer = true;
+            throw err;
+          });
+        })
+        .then(function () {
+          restore();
+          form.reset();
+          showFormStatus(
+            true,
+            "Message sent",
+            "Thanks for reaching out. Someone from Awad Academy will get back to you shortly."
+          );
+        })
+        .catch(function (error) {
+          console.error("Form submission error:", error);
+          restore();
+          showFormStatus(
+            false,
+            "Message not sent",
+            error && error.fromServer && error.message
+              ? error.message
+              : "We couldn't send your message just now. Please try again, or email us at info@awadacademy.com."
+          );
+        });
+    });
   });
 });

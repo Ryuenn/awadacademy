@@ -7223,3 +7223,475 @@
       0 5px 32px rgba(79, 84, 190, 0.3);
   }
 }
+
+/* ===== FORM STATUS MODAL (FormSubmit AJAX result) ===== */
+.form-status-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(0, 0, 0, 0.72);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
+  z-index: 1200;
+}
+
+.form-status-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.form-status-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  padding: 2.75rem 2rem 2rem;
+  border-radius: 14px;
+  background: #1f2430;
+  text-align: center;
+  transform: scale(0.96);
+  opacity: 0;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.form-status-modal.show .form-status-card {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.form-status-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.form-status-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+  transform: scale(1.05);
+}
+
+.form-status-icon {
+  width: 3.75rem;
+  height: 3.75rem;
+  margin: 0 auto 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.form-status-modal.is-success .form-status-icon {
+  background: rgba(34, 197, 94, 0.14);
+  color: #4ade80;
+  box-shadow: inset 0 0 0 1px rgba(34, 197, 94, 0.35);
+}
+
+.form-status-modal.is-error .form-status-icon {
+  background: rgba(239, 68, 68, 0.14);
+  color: #f87171;
+  box-shadow: inset 0 0 0 1px rgba(239, 68, 68, 0.35);
+}
+
+.form-status-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.form-status-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: rgba(226, 232, 240, 0.78);
+}
+
+.form-status-button {
+  margin-top: 1.75rem;
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+  color: #1f2430;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-status-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.18);
+}
+
+.form-status-button:active {
+  transform: translateY(-2px) scale(0.98);
+}
+
+.contact-submit[disabled],
+.site-footer-submit[disabled] {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-status-modal,
+  .form-status-card,
+  .form-status-button {
+    transition: none;
+  }
+}
+
+/* ===== SIGNUP PAGE ===== */
+.page-signup {
+  background-color: #0e1014;
+}
+
+.signup-main {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 5rem 1.25rem 5.5rem;
+  background:
+    radial-gradient(ellipse 70% 90% at 15% 0%, rgba(129, 140, 248, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 80% at 88% 100%, rgba(56, 189, 248, 0.14) 0%, transparent 55%),
+    linear-gradient(180deg, #0d1020 0%, #12162a 45%, #0b0e18 100%);
+}
+
+.signup-glow {
+  position: absolute;
+  width: 30rem;
+  height: 30rem;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.signup-glow--left {
+  top: -8rem;
+  left: -10rem;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.4) 0%, transparent 70%);
+}
+
+.signup-glow--right {
+  bottom: -12rem;
+  right: -10rem;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.35) 0%, transparent 70%);
+}
+
+.signup-main-inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.signup-copy {
+  color: #e5e7eb;
+}
+
+.signup-badge {
+  display: inline-block;
+  padding: 0.5rem 1.15rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #14162e;
+  background: linear-gradient(135deg, #ede9fe 0%, #c4b5fd 100%);
+  box-shadow: 0 0 26px rgba(196, 181, 253, 0.45);
+}
+
+.signup-title {
+  margin: 1.5rem 0 0;
+  font-size: clamp(2.25rem, 4vw, 3.25rem);
+  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: #f9fafb;
+}
+
+.signup-title-accent {
+  background: linear-gradient(120deg, #c4b5fd 0%, #a5b4fc 45%, #7dd3fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.signup-subtitle {
+  margin: 1.25rem 0 0;
+  max-width: 30rem;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(226, 232, 240, 0.78);
+}
+
+.signup-facts {
+  list-style: none;
+  margin: 2.25rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  max-width: 30rem;
+}
+
+.signup-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.95rem 1.1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: linear-gradient(145deg, rgba(30, 34, 70, 0.55), rgba(15, 18, 32, 0.55));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.signup-fact-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(196, 181, 253, 0.85);
+}
+
+.signup-fact-value {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(241, 245, 249, 0.92);
+}
+
+.signup-note {
+  margin: 1.75rem 0 0;
+  font-size: 0.85rem;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.signup-note a {
+  color: #c4b5fd;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(196, 181, 253, 0.4);
+}
+
+.signup-note a:hover {
+  color: #ede9fe;
+}
+
+.signup-form-shell {
+  position: relative;
+}
+
+.signup-form {
+  position: relative;
+  padding: 2.25rem 2.25rem 2.5rem;
+  border-radius: 1.75rem;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(167, 139, 250, 0.16), transparent 55%),
+    radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.16), transparent 55%),
+    linear-gradient(150deg, rgba(17, 21, 40, 0.97), rgba(12, 15, 26, 0.97));
+  box-shadow:
+    0 30px 70px rgba(8, 10, 22, 0.75),
+    0 0 0 1px rgba(148, 163, 184, 0.22);
+}
+
+.signup-form-header {
+  margin-bottom: 1.75rem;
+}
+
+.signup-form-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #f9fafb;
+}
+
+.signup-form-subtitle {
+  margin: 0.4rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgba(148, 163, 184, 0.95);
+}
+
+.signup-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin-bottom: 1.1rem;
+}
+
+.signup-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 1.1rem;
+}
+
+.signup-form-grid .signup-form-group {
+  margin-bottom: 0;
+}
+
+.signup-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(203, 213, 225, 0.85);
+}
+
+.signup-input,
+.signup-textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: rgba(8, 11, 22, 0.75);
+  color: #e5e7eb;
+  font-size: 0.92rem;
+  font-family: inherit;
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.signup-input::placeholder,
+.signup-textarea::placeholder {
+  color: rgba(148, 163, 184, 0.6);
+}
+
+.signup-input:focus,
+.signup-textarea:focus {
+  border-color: rgba(167, 139, 250, 0.75);
+  background-color: rgba(8, 11, 22, 0.95);
+  box-shadow: 0 0 0 3px rgba(139, 122, 246, 0.18);
+}
+
+.signup-textarea {
+  min-height: 5.25rem;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.signup-submit {
+  margin-top: 0.5rem;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.75rem;
+  border: none;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #14162e;
+  background: linear-gradient(135deg, #ede9fe 0%, #c4b5fd 55%, #a5b4fc 100%);
+  box-shadow:
+    0 18px 40px rgba(99, 102, 241, 0.35),
+    0 0 0 1px rgba(237, 233, 254, 0.3);
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.signup-submit:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 24px 55px rgba(129, 140, 248, 0.5),
+    0 0 0 1px rgba(237, 233, 254, 0.55);
+}
+
+.signup-submit:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+.signup-submit[disabled] {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.signup-submit-arrow {
+  font-size: 1rem;
+}
+
+.signup-disclaimer {
+  margin: 1.1rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.65;
+  color: rgba(148, 163, 184, 0.75);
+}
+
+@media (max-width: 991px) {
+  .signup-main-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.75rem;
+  }
+
+  .signup-copy {
+    max-width: 34rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .signup-main {
+    padding: 3.5rem 1rem 4rem;
+  }
+
+  .signup-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .signup-form {
+    padding: 1.75rem 1.35rem 2rem;
+  }
+
+  .signup-form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signup-submit {
+    transition: none;
+  }
+}
