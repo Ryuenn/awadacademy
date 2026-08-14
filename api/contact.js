@@ -123,11 +123,13 @@ async function postJson(url, headers, payload, timeoutMs) {
   return fetch(url, options);
 }
 
-async function verifyTurnstile(token, ip) {
+async function verifyTurnstile(token) {
+  // remoteip is deliberately not sent: Cloudflare treats it as a constraint when
+  // present, and a proxy hop can make the address we see differ from the one that
+  // solved the challenge — which fails verification for a legitimate visitor.
   var form = new URLSearchParams();
   form.append("secret", process.env.TURNSTILE_SECRET_KEY);
   form.append("response", token);
-  if (ip && ip !== "unknown") form.append("remoteip", ip);
 
   var options = {
     method: "POST",
@@ -142,7 +144,22 @@ async function verifyTurnstile(token, ip) {
   var json = await response.json().catch(function () {
     return null;
   });
-  return !!(json && json.success === true);
+
+  if (!json || json.success !== true) {
+    // Cloudflare's error-codes say exactly what went wrong — invalid-input-secret,
+    // timeout-or-duplicate, invalid-input-response, etc. Without this, every cause
+    // looks identical from the outside.
+    console.error(
+      "contact: Turnstile rejected the token",
+      JSON.stringify({
+        status: response.status,
+        errorCodes: (json && json["error-codes"]) || null,
+        hostname: (json && json.hostname) || null
+      })
+    );
+    return false;
+  }
+  return true;
 }
 
 module.exports = async function handler(req, res) {
@@ -204,7 +221,7 @@ module.exports = async function handler(req, res) {
 
   var humanVerified = false;
   try {
-    humanVerified = await verifyTurnstile(turnstileToken, ip);
+    humanVerified = await verifyTurnstile(turnstileToken);
   } catch (err) {
     console.error("contact: Turnstile verification request failed", err);
     return res.status(502).json({ ok: false, error: "We couldn't complete the verification check. Please try again." });
