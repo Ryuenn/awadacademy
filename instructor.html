@@ -349,22 +349,27 @@
 
                 <form
                   class="site-footer-form"
-                  action="https://formsubmit.co/ajax/tashajulia@theawadlawfirm.com"
+                  action="/api/contact"
                   method="POST"
                 >
-                  <input type="hidden" name="_subject" value="Footer form — Awad Academy site" />
-                  <input type="hidden" name="_cc" value="Info@awadacademy.com,sandra@theawadlawfirm.com,mehar@theawadlawfirm.com" />
-                  <input type="hidden" name="_template" value="table" />
-                  <input type="hidden" name="_captcha" value="false" />
-                  <input type="text" name="_honey" style="display: none" tabindex="-1" autocomplete="off" aria-hidden="true" />
+                  <!-- Honeypot: hidden from people, tempting to bots. Anything typed here means the message is dropped. -->
+                  <input
+                    type="text"
+                    name="website"
+                    style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden"
+                    tabindex="-1"
+                    autocomplete="off"
+                    aria-hidden="true"
+                  />
                   <div class="site-footer-form-group">
                     <label for="footer-fullname-instructor" class="site-footer-label">Fullname</label>
                     <input
                       id="footer-fullname-instructor"
-                      name="name"
+                      name="fullname"
                       type="text"
                       class="site-footer-input"
                       placeholder="Enter name"
+                      required
                       autocomplete="name"
                     />
                   </div>
@@ -407,6 +412,8 @@
                     ></textarea>
                   </div>
 
+                  <div class="cf-turnstile" data-sitekey="0x4AAAAAAEP7kU3y9sD9PE4Q"></div>
+
                   <button type="submit" class="site-footer-submit">
                     Submit
                     <span class="site-footer-submit-arrow">→</span>
@@ -427,6 +434,7 @@
       </footer>
     </main>
 
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <script src="js/script.js"></script>
   </body>
 </html>

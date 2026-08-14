@@ -841,4 +841,115 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
   });
+
+  // ===== FOOTER CONTACT FORM (/api/contact) =====
+  // Posts JSON to our own serverless function — same origin, so no CORS. The
+  // function verifies the Turnstile token before relaying the message, and the
+  // token is single-use, so the widget is reset after every attempt.
+
+  document.querySelectorAll('form[action="/api/contact"]').forEach(function (form) {
+    var submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+    var widget = form.querySelector(".cf-turnstile");
+
+    function resetTurnstile() {
+      if (!window.turnstile || typeof window.turnstile.reset !== "function") return;
+      try {
+        if (widget) window.turnstile.reset(widget);
+        else window.turnstile.reset();
+      } catch (err) {
+        // A widget that never rendered has nothing to reset.
+      }
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (form.getAttribute("data-sending") === "true") return;
+
+      if (typeof form.checkValidity === "function" && !form.checkValidity()) {
+        if (typeof form.reportValidity === "function") form.reportValidity();
+        return;
+      }
+
+      var tokenField = form.querySelector('[name="cf-turnstile-response"]');
+      var token = tokenField ? tokenField.value.trim() : "";
+      if (!token) {
+        showFormStatus(
+          false,
+          "One more step",
+          "Please complete the verification check below the form, then submit again."
+        );
+        return;
+      }
+
+      var fields = serializeForm(form);
+      var payload = {
+        fullname: fields.fullname || "",
+        phone: fields.phone || "",
+        email: fields.email || "",
+        message: fields.message || "",
+        website: fields.website || "",
+        turnstileToken: token,
+        pageUrl: window.location.href
+      };
+
+      var originalBtn = submitBtn ? submitBtn.innerHTML : "";
+      form.setAttribute("data-sending", "true");
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = "Sending…";
+      }
+
+      var restore = function () {
+        form.removeAttribute("data-sending");
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtn;
+        }
+      };
+
+      fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(payload)
+      })
+        .then(function (response) {
+          return response
+            .json()
+            .catch(function () {
+              return null;
+            })
+            .then(function (json) {
+              if (response.ok && json && json.ok === true) return json;
+              var err = new Error((json && json.error) || "Form submission failed");
+              err.fromServer = !!(json && json.error);
+              throw err;
+            });
+        })
+        .then(function () {
+          restore();
+          form.reset();
+          resetTurnstile();
+          showFormStatus(
+            true,
+            "Message sent",
+            "Thanks for reaching out. Someone from Awad Academy will get back to you shortly."
+          );
+        })
+        .catch(function (error) {
+          console.error("Contact form error:", error);
+          restore();
+          resetTurnstile();
+          showFormStatus(
+            false,
+            "Message not sent",
+            error && error.fromServer && error.message
+              ? error.message
+              : "We couldn't send your message just now. Please try again, or email us at info@awadacademy.com."
+          );
+        });
+    });
+  });
 });
