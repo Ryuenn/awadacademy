@@ -102,6 +102,12 @@ function singleLine(value) {
   return value.replace(/[\r\n]+/g, " ").trim();
 }
 
+// Dashboard-pasted secrets pick up stray whitespace and newlines easily, and the
+// value can't be read back once stored as Sensitive — so trim on the way in.
+function env(name) {
+  return String(process.env[name] || "").trim();
+}
+
 function recipients() {
   return String(process.env.CONTACT_TO_EMAIL || "")
     .split(",")
@@ -128,7 +134,7 @@ async function verifyTurnstile(token) {
   // present, and a proxy hop can make the address we see differ from the one that
   // solved the challenge — which fails verification for a legitimate visitor.
   var form = new URLSearchParams();
-  form.append("secret", process.env.TURNSTILE_SECRET_KEY);
+  form.append("secret", env("TURNSTILE_SECRET_KEY"));
   form.append("response", token);
 
   var options = {
@@ -149,12 +155,18 @@ async function verifyTurnstile(token) {
     // Cloudflare's error-codes say exactly what went wrong — invalid-input-secret,
     // timeout-or-duplicate, invalid-input-response, etc. Without this, every cause
     // looks identical from the outside.
+    var secret = env("TURNSTILE_SECRET_KEY");
     console.error(
       "contact: Turnstile rejected the token",
       JSON.stringify({
         status: response.status,
         errorCodes: (json && json["error-codes"]) || null,
-        hostname: (json && json.hostname) || null
+        hostname: (json && json.hostname) || null,
+        // Fingerprint only — enough to spot a truncated or wrong-field paste
+        // without putting the secret itself in the log.
+        secretLength: secret.length,
+        secretTail: secret.slice(-4),
+        tokenLength: token.length
       })
     );
     return false;
@@ -211,7 +223,7 @@ module.exports = async function handler(req, res) {
       .json({ ok: false, error: "Too many messages from this connection. Please try again in a few minutes." });
   }
 
-  if (!process.env.TURNSTILE_SECRET_KEY) {
+  if (!env("TURNSTILE_SECRET_KEY")) {
     console.error("contact: TURNSTILE_SECRET_KEY is not set");
     return res.status(500).json({ ok: false, error: "The contact form is misconfigured. Please email us directly." });
   }
@@ -231,8 +243,8 @@ module.exports = async function handler(req, res) {
   }
 
   var to = recipients();
-  var sender = str(process.env.CONTACT_FROM_EMAIL);
-  if (!process.env.SMTP2GO_API_KEY || !to.length || !sender) {
+  var sender = env("CONTACT_FROM_EMAIL");
+  if (!env("SMTP2GO_API_KEY") || !to.length || !sender) {
     console.error("contact: SMTP2GO_API_KEY, CONTACT_TO_EMAIL, or CONTACT_FROM_EMAIL is not set");
     return res.status(500).json({ ok: false, error: "The contact form is misconfigured. Please email us directly." });
   }
@@ -257,7 +269,7 @@ module.exports = async function handler(req, res) {
   var response;
   var result;
   try {
-    response = await postJson(SMTP2GO_SEND_URL, { "X-Smtp2go-Api-Key": process.env.SMTP2GO_API_KEY }, payload, 15000);
+    response = await postJson(SMTP2GO_SEND_URL, { "X-Smtp2go-Api-Key": env("SMTP2GO_API_KEY") }, payload, 15000);
     result = await response.json().catch(function () {
       return null;
     });
