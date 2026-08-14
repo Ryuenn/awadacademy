@@ -166,6 +166,7 @@ module.exports = async function handler(req, res) {
   var phone = str(body.phone);
   var email = str(body.email);
   var message = str(body.message);
+  var topic = str(body.topic).slice(0, NAME_MAX); // optional; only the contact page sends it
   var pageUrl = str(body.pageUrl).slice(0, URL_MAX);
   var turnstileToken = str(body.turnstileToken || body["cf-turnstile-response"]);
 
@@ -224,6 +225,7 @@ module.exports = async function handler(req, res) {
     "Name: " + fullname + "\n" +
     "Email: " + email + "\n" +
     "Phone: " + (phone || "—") + "\n" +
+    (topic ? "Topic: " + topic + "\n" : "") +
     (pageUrl ? "Page: " + pageUrl + "\n" : "") +
     "\n" + message + "\n";
 

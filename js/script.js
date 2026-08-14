@@ -887,6 +887,7 @@ document.addEventListener("DOMContentLoaded", function () {
         phone: fields.phone || "",
         email: fields.email || "",
         message: fields.message || "",
+        topic: fields.topic || "",
         website: fields.website || "",
         turnstileToken: token,
         pageUrl: window.location.href

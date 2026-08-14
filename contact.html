@@ -174,23 +174,28 @@
           <div class="contact-main-form-shell">
             <form
               class="contact-main-form"
-              action="https://formsubmit.co/ajax/tashajulia@theawadlawfirm.com"
+              action="/api/contact"
               method="POST"
             >
-              <input type="hidden" name="_subject" value="Contact page — Awad Academy" />
-              <input type="hidden" name="_cc" value="Info@awadacademy.com,sandra@theawadlawfirm.com,mehar@theawadlawfirm.com" />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="text" name="_honey" style="display: none" tabindex="-1" autocomplete="off" aria-hidden="true" />
+              <!-- Honeypot: hidden from people, tempting to bots. Anything typed here means the message is dropped. -->
+              <input
+                type="text"
+                name="website"
+                style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden"
+                tabindex="-1"
+                autocomplete="off"
+                aria-hidden="true"
+              />
               <div class="contact-form-grid">
                 <div class="contact-form-group">
                   <label for="contact-fullname" class="contact-label">Full Name</label>
                   <input
                     id="contact-fullname"
-                    name="name"
+                    name="fullname"
                     type="text"
                     class="contact-input"
                     placeholder="Enter your full name"
+                    required
                     autocomplete="name"
                   />
                 </div>
@@ -242,6 +247,8 @@
                   required
                 ></textarea>
               </div>
+
+              <div class="cf-turnstile" data-sitekey="0x4AAAAAAEP7kU3y9sD9PE4Q"></div>
 
               <button type="submit" class="contact-submit">
                 Send Message
