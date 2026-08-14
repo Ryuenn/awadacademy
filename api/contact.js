@@ -7,7 +7,8 @@
 // Required environment variables (set in Vercel — never hardcode):
 //   SMTP2GO_API_KEY      API key for api.smtp2go.com
 //   TURNSTILE_SECRET_KEY server-side secret for the Cloudflare Turnstile widget
-//   CONTACT_TO_EMAIL     recipient(s); comma-separated for more than one
+//   CONTACT_TO_EMAIL     primary recipient(s); comma-separated for more than one
+//   CONTACT_CC_EMAIL     optional CC list; comma-separated
 //   CONTACT_FROM_EMAIL   verified sender address on the SMTP2GO account
 
 var TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
@@ -108,8 +109,9 @@ function env(name) {
   return String(process.env[name] || "").trim();
 }
 
-function recipients() {
-  return String(process.env.CONTACT_TO_EMAIL || "")
+// Comma-separated address list from an env var, e.g. "a@x.com, b@y.com".
+function addressList(name) {
+  return env(name)
     .split(",")
     .map(function (address) {
       return address.trim();
@@ -242,7 +244,8 @@ module.exports = async function handler(req, res) {
     return res.status(403).json({ ok: false, error: "Verification failed. Please try the challenge again." });
   }
 
-  var to = recipients();
+  var to = addressList("CONTACT_TO_EMAIL");
+  var cc = addressList("CONTACT_CC_EMAIL");
   var sender = env("CONTACT_FROM_EMAIL");
   if (!env("SMTP2GO_API_KEY") || !to.length || !sender) {
     console.error("contact: SMTP2GO_API_KEY, CONTACT_TO_EMAIL, or CONTACT_FROM_EMAIL is not set");
@@ -265,6 +268,7 @@ module.exports = async function handler(req, res) {
     text_body: textBody,
     custom_headers: [{ header: "Reply-To", value: singleLine(email) }]
   };
+  if (cc.length) payload.cc = cc;
 
   var response;
   var result;
