@@ -146,10 +146,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!a) return;
         if (!isMobile()) return;
         var href = (a.getAttribute("href") || "").trim();
-        var onLearningCenterPage = window.location.pathname.indexOf("learning-center.html") !== -1;
-        if (href.indexOf("learning-center.html") !== -1 && !onLearningCenterPage) {
+        var onLearningCenterPage = window.location.pathname.indexOf("/learning-center") !== -1;
+        if (href.indexOf("/learning-center") !== -1 && !onLearningCenterPage) {
           e.preventDefault();
-          showSubscriptionSignupModal("learning-center.html");
+          showSubscriptionSignupModal("/learning-center");
         }
         closeMobileNav();
       });
@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function showSubscriptionSignupModal(redirectPage, modalEl) {
     var m = modalEl || subscriptionModal;
     if (!m) return;
-    var page = redirectPage || "learning-center.html";
+    var page = redirectPage || "/learning-center";
     m.setAttribute("data-redirect-page", page);
     m.classList.remove("is-navigating");
     m.classList.add("show");
@@ -374,7 +374,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (isGalleryVideo(trigger)) {
           e.preventDefault();
           e.stopPropagation();
-          showSubscriptionSignupModal("learning-center.html");
+          showSubscriptionSignupModal("/learning-center");
         } else {
           openVideoModal(url);
         }
@@ -384,7 +384,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           if (isGalleryVideo(trigger)) {
-            showSubscriptionSignupModal("learning-center.html");
+            showSubscriptionSignupModal("/learning-center");
           } else {
             openVideoModal(url);
           }
@@ -410,7 +410,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Watch More Videos button opens subscription modal
   if (watchMoreVideosBtn) {
     watchMoreVideosBtn.addEventListener("click", function () {
-      showSubscriptionSignupModal("learning-center.html");
+      showSubscriptionSignupModal("/learning-center");
     });
   }
 
@@ -419,18 +419,18 @@ document.addEventListener("DOMContentLoaded", function () {
   if (freeResourcesNavLink) {
     freeResourcesNavLink.addEventListener("click", function (e) {
       e.preventDefault();
-      showSubscriptionSignupModal("learning-center.html");
+      showSubscriptionSignupModal("/learning-center");
     });
   }
 
   // Learning Center nav link opens subscription modal on non-learning-center pages
   var learningCenterNavLink = document.getElementById("learningCenterNavLink");
   if (learningCenterNavLink) {
-    var isLearningCenterPage = window.location.pathname.includes("learning-center.html");
+    var isLearningCenterPage = window.location.pathname.includes("/learning-center");
     if (!isLearningCenterPage) {
       learningCenterNavLink.addEventListener("click", function (e) {
         e.preventDefault();
-        showSubscriptionSignupModal("learning-center.html");
+        showSubscriptionSignupModal("/learning-center");
       });
     }
   }
@@ -439,7 +439,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var heroCtaButton = document.getElementById("heroCtaButton");
   if (heroCtaButton) {
     heroCtaButton.addEventListener("click", function () {
-      showSubscriptionSignupModal("learning-center.html");
+      showSubscriptionSignupModal("/learning-center");
     });
   }
 
@@ -448,12 +448,12 @@ document.addEventListener("DOMContentLoaded", function () {
   var programWatchBtn = document.getElementById("programWatchVideosBtn");
   if (programJoinBtn) {
     programJoinBtn.addEventListener("click", function () {
-      showSubscriptionSignupModal("learning-center.html");
+      showSubscriptionSignupModal("/learning-center");
     });
   }
   if (programWatchBtn) {
     programWatchBtn.addEventListener("click", function () {
-      showSubscriptionSignupModal("learning-center.html");
+      showSubscriptionSignupModal("/learning-center");
     });
   }
 
@@ -464,7 +464,7 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
       var m = document.querySelector(".subscription-modal");
       if (m) {
-        showSubscriptionSignupModal("learning-center.html", m);
+        showSubscriptionSignupModal("/learning-center", m);
         var modalForm = m.querySelector(".modal-form");
         if (modalForm) modalForm.reset();
       }
@@ -528,7 +528,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Open modal for outline CTA (post-unlock → Learning Center)
     resourcesBtn.addEventListener("click", function (e) {
       e.preventDefault();
-      showSubscriptionSignupModal("learning-center.html", subscriptionModal);
+      showSubscriptionSignupModal("/learning-center", subscriptionModal);
       clearEmailError();
     });
 
@@ -591,8 +591,8 @@ document.addEventListener("DOMContentLoaded", function () {
         var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
         var nameValue = nameInput ? nameInput.value.trim() : "";
 
-        var lockedRedirect = (subscriptionModal.getAttribute("data-redirect-page") || "learning-center.html").trim();
-        if (!lockedRedirect) lockedRedirect = "learning-center.html";
+        var lockedRedirect = (subscriptionModal.getAttribute("data-redirect-page") || "/learning-center").trim();
+        if (!lockedRedirect) lockedRedirect = "/learning-center";
 
         // Show loading state
         if (submitBtn) {
@@ -668,7 +668,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (redirectBtn) {
       redirectBtn.addEventListener("click", function (e) {
         e.preventDefault();
-        var redirectPage = (subscriptionModal.getAttribute("data-redirect-page") || "learning-center.html").trim() || "learning-center.html";
+        var redirectPage = (subscriptionModal.getAttribute("data-redirect-page") || "/learning-center").trim() || "/learning-center";
         subscriptionModal.classList.add("is-navigating");
         setTimeout(function () {
           window.location.href = redirectPage;
@@ -680,7 +680,7 @@ document.addEventListener("DOMContentLoaded", function () {
     joinBtn.addEventListener("click", function (e) {
       e.preventDefault();
       setTimeout(function() {
-        window.location.href = "contact.html";
+        window.location.href = "/contact";
       }, 120);
     });
   });

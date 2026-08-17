@@ -1,0 +1,3 @@
+# Local development helpers - never part of the deployed site.
+tools/
+dev.cmd
