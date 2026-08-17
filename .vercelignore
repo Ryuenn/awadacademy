@@ -1,3 +1,6 @@
 # Local development helpers - never part of the deployed site.
 tools/
 dev.cmd
+
+# Internal task notes and verification captures.
+notes/

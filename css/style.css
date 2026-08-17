@@ -6480,6 +6480,10 @@
     display: block;
   }
 
+  .modal-form .cf-turnstile {
+    margin-top: 1.5rem;
+  }
+
   .modal-cta {
     margin-top: 1.5rem;
     padding: 0.95rem 1.5rem;
@@ -7606,6 +7610,10 @@
   min-height: 5.25rem;
   resize: vertical;
   line-height: 1.55;
+}
+
+.signup-form .cf-turnstile {
+  margin-top: 1.25rem;
 }
 
 .signup-submit {

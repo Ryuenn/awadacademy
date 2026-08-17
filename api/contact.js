@@ -19,6 +19,16 @@ var NAME_MAX = 200;
 var EMAIL_MAX = 254;
 var PHONE_MAX = 50;
 var URL_MAX = 500;
+var ADDRESS_MAX = 500;
+
+// Every form on the site posts here. The type only decides the subject line and
+// whether a message is required — Turnstile, the honeypot, rate limiting and the
+// recipient list are shared, so no form can opt out of them.
+var FORM_TYPES = {
+  contact: { subject: "Website contact", requiresMessage: true },
+  unlock: { subject: "Learning Center access request", requiresMessage: false },
+  waitlist: { subject: "Event waitlist", requiresMessage: false }
+};
 
 var RATE_LIMIT_MAX = 5;
 var RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
@@ -193,16 +203,26 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ ok: true });
   }
 
+  var formType = str(body.formType).toLowerCase();
+  var form = FORM_TYPES[formType] || FORM_TYPES.contact;
+
   var fullname = str(body.fullname || body.name);
   var phone = str(body.phone);
   var email = str(body.email);
   var message = str(body.message);
   var topic = str(body.topic).slice(0, NAME_MAX); // optional; only the contact page sends it
+  var title = str(body.title).slice(0, NAME_MAX); // optional; only the waitlist sends it
+  var address = str(body.address).slice(0, ADDRESS_MAX); // optional; only the waitlist sends it
   var pageUrl = str(body.pageUrl).slice(0, URL_MAX);
   var turnstileToken = str(body.turnstileToken || body["cf-turnstile-response"]);
 
-  if (!fullname || !email || !message) {
-    return res.status(400).json({ ok: false, error: "Please fill in your name, email, and message." });
+  if (!fullname || !email || (form.requiresMessage && !message)) {
+    return res.status(400).json({
+      ok: false,
+      error: form.requiresMessage
+        ? "Please fill in your name, email, and message."
+        : "Please fill in your name and email."
+    });
   }
   if (fullname.length > NAME_MAX || phone.length > PHONE_MAX) {
     return res.status(400).json({ ok: false, error: "Your name or phone number is too long." });
@@ -253,18 +273,20 @@ module.exports = async function handler(req, res) {
   }
 
   var textBody =
-    "New message from the Awad Academy website\n\n" +
+    "New " + form.subject.toLowerCase() + " from the Awad Academy website\n\n" +
     "Name: " + fullname + "\n" +
     "Email: " + email + "\n" +
     "Phone: " + (phone || "—") + "\n" +
     (topic ? "Topic: " + topic + "\n" : "") +
+    (title ? "Title: " + title + "\n" : "") +
+    (address ? "Address: " + address + "\n" : "") +
     (pageUrl ? "Page: " + pageUrl + "\n" : "") +
-    "\n" + message + "\n";
+    (message ? "\n" + message + "\n" : "");
 
   var payload = {
     sender: sender,
     to: to,
-    subject: singleLine("Website contact — " + fullname).slice(0, 200),
+    subject: singleLine(form.subject + " — " + fullname).slice(0, 200),
     text_body: textBody,
     custom_headers: [{ header: "Reply-To", value: singleLine(email) }]
   };

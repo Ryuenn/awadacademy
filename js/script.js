@@ -499,6 +499,18 @@ document.addEventListener("DOMContentLoaded", function () {
       return emailRegex.test(email);
     };
 
+    // A Turnstile token is single-use, so the widget has to be reset after every
+    // attempt or the next submit fails with timeout-or-duplicate.
+    var modalWidget = subscriptionModal.querySelector(".cf-turnstile");
+    var resetModalTurnstile = function () {
+      if (!window.turnstile || typeof window.turnstile.reset !== "function") return;
+      try {
+        if (modalWidget) window.turnstile.reset(modalWidget);
+      } catch (err) {
+        // A widget that never rendered has nothing to reset.
+      }
+    };
+
     // Clear error state
     var clearEmailError = function() {
       if (emailInput) {
@@ -542,6 +554,9 @@ document.addEventListener("DOMContentLoaded", function () {
       if (modalForm) {
         modalForm.style.display = "block";
         modalForm.reset();
+        // reset() blanks the hidden token field, so clear the widget too or it
+        // stays visually solved while holding nothing.
+        resetModalTurnstile();
         if (submitBtn) {
           submitBtn.classList.remove("loading");
           submitBtn.disabled = false;
@@ -583,13 +598,18 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
-        // Honeypot — silently drop bot submissions
-        var modalHoney = modalForm.querySelector('input[name="_honey"]');
-        if (modalHoney && modalHoney.value.trim() !== "") return;
-
         // Get form data
         var nameInput = subscriptionModal.querySelector(".modal-input[type='text']");
         var nameValue = nameInput ? nameInput.value.trim() : "";
+
+        // The backend rejects a request with no Turnstile token, so catch it here
+        // and say something useful instead of surfacing a bare 403.
+        var modalToken = modalForm.querySelector('[name="cf-turnstile-response"]');
+        var token = modalToken ? modalToken.value.trim() : "";
+        if (!token) {
+          showEmailError("Please complete the verification check, then try again.");
+          return;
+        }
 
         var lockedRedirect = (subscriptionModal.getAttribute("data-redirect-page") || "/learning-center").trim();
         if (!lockedRedirect) lockedRedirect = "/learning-center";
@@ -601,13 +621,19 @@ document.addEventListener("DOMContentLoaded", function () {
           submitBtn.textContent = "Sending…";
         }
 
-        // Submit to FormSubmit's AJAX endpoint; hidden _subject/_cc/_template fields ride along
-        var data = serializeForm(modalForm);
-        data.name = nameValue;
-        data.email = emailValue;
-        data["Page URL"] = window.location.href;
+        // Same backend as the contact forms: Turnstile is verified server-side and
+        // the recipient list lives in env vars, never in the page.
+        var fields = serializeForm(modalForm);
+        var data = {
+          formType: fields.formType || "unlock",
+          fullname: nameValue,
+          email: emailValue,
+          website: fields.website || "",
+          turnstileToken: token,
+          pageUrl: window.location.href
+        };
 
-        fetch(modalForm.action, {
+        fetch("/api/contact", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -616,17 +642,18 @@ document.addEventListener("DOMContentLoaded", function () {
           body: JSON.stringify(data)
         })
         .then(function(response) {
-          return response.json().then(function(json) {
-            if (response.ok && isFormSubmitSuccess(json)) {
+          return response.json().catch(function () { return null; }).then(function(json) {
+            if (response.ok && json && json.ok === true) {
               return json;
             }
-            var err = new Error(formSubmitMessage(json) || "Form submission failed");
-            err.fromServer = true;
+            var err = new Error((json && json.error) || "Form submission failed");
+            err.fromServer = !!(json && json.error);
             throw err;
           });
         })
         .then(function(data) {
           // Success - show modal success message
+          resetModalTurnstile();
           if (modalForm) modalForm.style.display = "none";
           if (submitBtn) {
             submitBtn.classList.remove("loading");
@@ -651,6 +678,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(function(error) {
           console.error("Error:", error);
+          resetModalTurnstile();
           showEmailError(
             error && error.fromServer && error.message
               ? error.message
@@ -685,8 +713,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // ===== FORMSUBMIT (AJAX) =====
-  // Forms post to https://formsubmit.co/ajax/<recipient> and get JSON back, so the
+  // ===== FORM HELPERS =====
+  // Every form on the site posts JSON to /api/contact and gets JSON back, so the
   // page never navigates away — results are shown in the status modal below.
 
   function serializeForm(form) {
@@ -698,16 +726,6 @@ document.addEventListener("DOMContentLoaded", function () {
       data[field.name] = field.value;
     });
     return data;
-  }
-
-  // FormSubmit answers with {"success": "true"} — the flag comes back as a string.
-  function isFormSubmitSuccess(json) {
-    if (!json) return false;
-    return json.success === true || json.success === "true";
-  }
-
-  function formSubmitMessage(json) {
-    return json && typeof json.message === "string" ? json.message : "";
   }
 
   var formStatusModal = null;
@@ -766,82 +784,6 @@ document.addEventListener("DOMContentLoaded", function () {
     formStatusModal.setAttribute("aria-hidden", "true");
   }
 
-  document.querySelectorAll('form[action*="formsubmit.co"]').forEach(function (form) {
-    // The subscription modal form runs its own submit flow (unlock + redirect)
-    if (form.classList.contains("modal-form")) return;
-
-    var submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      if (form.getAttribute("data-sending") === "true") return;
-
-      // Honeypot — silently drop bot submissions
-      var honey = form.querySelector('input[name="_honey"]');
-      if (honey && honey.value.trim() !== "") return;
-
-      if (typeof form.checkValidity === "function" && !form.checkValidity()) {
-        if (typeof form.reportValidity === "function") form.reportValidity();
-        return;
-      }
-
-      var data = serializeForm(form);
-      data["Page URL"] = window.location.href;
-
-      var originalBtn = submitBtn ? submitBtn.innerHTML : "";
-      form.setAttribute("data-sending", "true");
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = "Sending…";
-      }
-
-      var restore = function () {
-        form.removeAttribute("data-sending");
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalBtn;
-        }
-      };
-
-      fetch(form.action, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify(data)
-      })
-        .then(function (response) {
-          return response.json().then(function (json) {
-            if (response.ok && isFormSubmitSuccess(json)) return json;
-            var err = new Error(formSubmitMessage(json) || "Form submission failed");
-            err.fromServer = true;
-            throw err;
-          });
-        })
-        .then(function () {
-          restore();
-          form.reset();
-          showFormStatus(
-            true,
-            "Message sent",
-            "Thanks for reaching out. Someone from Awad Academy will get back to you shortly."
-          );
-        })
-        .catch(function (error) {
-          console.error("Form submission error:", error);
-          restore();
-          showFormStatus(
-            false,
-            "Message not sent",
-            error && error.fromServer && error.message
-              ? error.message
-              : "We couldn't send your message just now. Please try again, or email us at info@awadacademy.com."
-          );
-        });
-    });
-  });
-
   // ===== FOOTER CONTACT FORM (/api/contact) =====
   // Posts JSON to our own serverless function — same origin, so no CORS. The
   // function verifies the Turnstile token before relaying the message, and the
@@ -883,11 +825,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
       var fields = serializeForm(form);
       var payload = {
-        fullname: fields.fullname || "",
+        formType: fields.formType || "contact",
+        fullname: fields.fullname || fields.name || "",
         phone: fields.phone || "",
         email: fields.email || "",
         message: fields.message || "",
         topic: fields.topic || "",
+        title: fields.title || "",
+        address: fields.address || "",
         website: fields.website || "",
         turnstileToken: token,
         pageUrl: window.location.href
@@ -933,10 +878,13 @@ document.addEventListener("DOMContentLoaded", function () {
           restore();
           form.reset();
           resetTurnstile();
+          var waitlist = payload.formType === "waitlist";
           showFormStatus(
             true,
-            "Message sent",
-            "Thanks for reaching out. Someone from Awad Academy will get back to you shortly."
+            waitlist ? "You're on the list" : "Message sent",
+            waitlist
+              ? "Thanks for signing up. We'll email you as soon as the next date is set."
+              : "Thanks for reaching out. Someone from Awad Academy will get back to you shortly."
           );
         })
         .catch(function (error) {
@@ -945,7 +893,7 @@ document.addEventListener("DOMContentLoaded", function () {
           resetTurnstile();
           showFormStatus(
             false,
-            "Message not sent",
+            payload.formType === "waitlist" ? "Signup not sent" : "Message not sent",
             error && error.fromServer && error.message
               ? error.message
               : "We couldn't send your message just now. Please try again, or email us at info@awadacademy.com."
