@@ -790,6 +790,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // token is single-use, so the widget is reset after every attempt.
 
   document.querySelectorAll('form[action="/api/contact"]').forEach(function (form) {
+    // The subscription modal posts here too, but runs its own submit flow (unlock
+    // + redirect). Binding this handler as well would fire two requests with the
+    // same single-use Turnstile token, and the second one fails as a duplicate.
+    if (form.classList.contains("modal-form")) return;
+
     var submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
     var widget = form.querySelector(".cf-turnstile");
 
