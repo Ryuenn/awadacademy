@@ -36,9 +36,12 @@ MOBILE_VIEWPORT = 412
 DESKTOP_VIEWPORT = 1440
 MOBILE_DPR = 2.625
 DESKTOP_DPR = 2
-LADDER = [160, 200, 260, 320, 400, 480, 560, 640, 720, 800,
-          960, 1120, 1280, 1440, 1600, 1920]
-MIN_STEP = 1.18
+LADDER = [160, 200, 260, 320, 400, 440, 480, 520, 560, 600, 640, 720, 800,
+          880, 960, 1120, 1280, 1440, 1600, 1920]
+# Finer steps cost a few extra files but let the browser land close to the exact
+# width it needs. At 1.18 the gap from 480 to 640 forced a 640w download for a
+# 493px slot.
+MIN_STEP = 1.08
 
 # class -> (rendered px at 412 viewport, rendered px at 1440 viewport)
 MEASURED = {
