@@ -20,6 +20,11 @@
 
   img {
     max-width: 100%;
+    /* Images now carry intrinsic width/height attributes so the browser can
+       reserve space before they load. height:auto keeps them scaling by aspect
+       ratio once max-width shrinks them - without it the height attribute wins
+       and the image stretches. */
+    height: auto;
     display: block;
   }
 
@@ -2502,7 +2507,7 @@
     pointer-events: none;
     position: absolute;
     inset: 0;
-    background-image: url("../assets/insightsbg.png");
+    background-image: url("../assets/insightsbg.webp");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;

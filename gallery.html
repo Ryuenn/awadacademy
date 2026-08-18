@@ -23,7 +23,8 @@
     <meta name="twitter:description" content="Browse the Awad Academy photo gallery for an inside look at our trial advocacy events, training sessions, guest speakers, and community moments." />
     <meta name="twitter:image" content="https://www.awadacademy.com/assets/og-image.jpg" />
     <link rel="icon" type="image/webp" href="assets/favicon.webp" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preload" as="image" href="assets/photogallery.webp" fetchpriority="high" />
+    <link rel="stylesheet" href="css/style.min.css" />
   </head>
   <body>
     <main class="page-root page-gallery">
@@ -33,10 +34,9 @@
           <div class="top-contact-inner">
             <a href="/" class="logo-link" aria-label="Awad Academy Home">
               <img
-                src="assets/awadacademylogo.png"
+                src="assets/awadacademylogo.webp"
                 alt="Awad Academy"
-                class="logo-image"
-              />
+                class="logo-image" width="1156" height="512" />
             </a>
             <button
               class="nav-toggle-button"
@@ -147,17 +147,15 @@
       <section class="about-hero">
         <div class="about-hero-background">
           <img
-            src="assets/photogallery.png"
+            src="assets/photogallery.webp"
             alt="Awad Academy community at an event"
-            class="about-hero-image"
-          />
+            class="about-hero-image" width="1600" height="1066" />
           <div class="about-hero-overlay"></div>
           <img
-            src="assets/extradesign_1.jpg"
+            src="assets/extradesign_1.webp"
             alt="Awad Academy decorative background accent"
             class="about-hero-watermark"
-            aria-hidden="true"
-          />
+            aria-hidden="true" width="1000" height="445" />
         </div>
 
         <div class="about-hero-content">
@@ -186,7 +184,7 @@
             <article class="event-album-card">
               <a href="/album-april-2026" class="event-album-card-link">
                 <div class="event-album-card-image">
-                  <img src="assets/AwadAcademyTraining/thumbs/_1054683.jpg" alt="Awad Academy Training April 2026" loading="lazy" />
+                  <img src="assets/AwadAcademyTraining/thumbs/_1054683.jpg" alt="Awad Academy Training April 2026" loading="lazy" width="480" height="269" />
                   <div class="event-album-card-image-shade"></div>
                   <span class="event-album-card-badge">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -297,10 +295,9 @@
             <div class="site-footer-main-grid">
               <div class="site-footer-brand-column">
                 <img
-                  src="assets/insightsbg.png"
+                  src="assets/insightsbg.webp"
                   alt="Awad Academy"
-                  class="site-footer-logo"
-                />
+                  class="site-footer-logo" width="1000" height="445" />
 
                 <div class="site-footer-office">
                   <p class="site-footer-office-title">Office:</p>
@@ -430,7 +427,7 @@
     </main>
 
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-    <script src="js/script.js"></script>
+    <script src="js/script.min.js" defer></script>
   </body>
 </html>
 

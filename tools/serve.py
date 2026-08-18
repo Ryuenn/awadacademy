@@ -43,6 +43,7 @@ MIME = {
     ".js": "text/javascript; charset=utf-8",
     ".mjs": "text/javascript; charset=utf-8",
     ".json": "application/json; charset=utf-8",
+    ".map": "application/json; charset=utf-8",
     ".xml": "application/xml; charset=utf-8",
     ".txt": "text/plain; charset=utf-8",
     ".svg": "image/svg+xml",
@@ -244,6 +245,18 @@ def main():
     except OSError as e:
         sys.exit("Could not bind %s:%d - %s\nTry: python tools/serve.py --port %d"
                  % (args.host, args.port, e, args.port + 1))
+
+    # The pages load css/style.min.css and js/script.min.js. Editing a source
+    # file without re-minifying would silently preview (and ship) stale assets,
+    # so check on every start.
+    try:
+        import minify
+        stale = [s for s, o in minify.TARGETS if minify.stale(s, o)]
+        if stale:
+            print("\n  !! Minified assets are STALE: " + ", ".join(stale))
+            print("  !! The pages load the .min files - run: python tools/minify.py")
+    except Exception:
+        pass
 
     base = "http://%s:%d" % (args.host, args.port)
     print("\n  Awad Academy - local preview (Vercel cleanUrls behaviour)")
