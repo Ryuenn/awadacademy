@@ -88,14 +88,24 @@ def geometry(cls):
 
 
 def rungs(cap, natural):
+    """Ladder of widths to offer, from smallest to the cap.
+
+    Each rung must be at least MIN_STEP wider than the last one KEPT - comparing
+    against the last kept value rather than overwriting it matters, because
+    overwriting cascades: 560 collapses into 640, which collapses into 720, and
+    the whole middle of the ladder disappears. That left an 848w file as the
+    smallest option above 400w, so a phone needing ~540px downloaded 848px.
+    """
     limit = min(cap, natural)
-    out = [w for w in LADDER if w < limit] + [limit]
     keep = []
-    for w in out:
-        if keep and w < keep[-1] * MIN_STEP:
-            keep[-1] = w
-        else:
+    for w in [w for w in LADDER if w < limit]:
+        if not keep or w >= keep[-1] * MIN_STEP:
             keep.append(w)
+    # The cap itself always ships; fold it into the last rung if they are close.
+    if not keep or limit >= keep[-1] * 1.08:
+        keep.append(limit)
+    else:
+        keep[-1] = limit
     return keep
 
 
